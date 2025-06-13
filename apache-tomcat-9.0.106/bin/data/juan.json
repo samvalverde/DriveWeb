@@ -1,0 +1,77 @@
+{
+  "username": "juan",
+  "quota": 1000,
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [],
+            "name": "bases",
+            "creationDate": "jun 13, 2025, 10:19:23 a. m.",
+            "modifiedDate": "jun 13, 2025, 10:19:23 a. m.",
+            "type": "dir"
+          },
+          {
+            "content": "esto es una prueba de pdf",
+            "name": "proyecto.pdf",
+            "creationDate": "jun 13, 2025, 10:19:43 a. m.",
+            "modifiedDate": "jun 13, 2025, 10:27:47 a. m.",
+            "type": "file"
+          },
+          {
+            "children": [],
+            "name": "imagenes",
+            "creationDate": "jun 13, 2025, 9:22:44 a. m.",
+            "modifiedDate": "jun 13, 2025, 9:22:44 a. m.",
+            "type": "dir"
+          }
+        ],
+        "name": "docs",
+        "creationDate": "jun 13, 2025, 9:22:14 a. m.",
+        "modifiedDate": "jun 13, 2025, 9:22:14 a. m.",
+        "type": "dir"
+      }
+    ],
+    "name": "root",
+    "creationDate": "jun 13, 2025, 9:18:22 a. m.",
+    "modifiedDate": "jun 13, 2025, 9:18:22 a. m.",
+    "type": "dir"
+  },
+  "shared": {
+    "children": [],
+    "name": "shared",
+    "creationDate": "jun 13, 2025, 9:18:22 a. m.",
+    "modifiedDate": "jun 13, 2025, 9:18:22 a. m.",
+    "type": "dir"
+  },
+  "current": {
+    "children": [
+      {
+        "children": [],
+        "name": "bases",
+        "creationDate": "jun 13, 2025, 10:19:23 a. m.",
+        "modifiedDate": "jun 13, 2025, 10:19:23 a. m.",
+        "type": "dir"
+      },
+      {
+        "content": "esto es una prueba de pdf",
+        "name": "proyecto.pdf",
+        "creationDate": "jun 13, 2025, 10:19:43 a. m.",
+        "modifiedDate": "jun 13, 2025, 10:27:47 a. m.",
+        "type": "file"
+      },
+      {
+        "children": [],
+        "name": "imagenes",
+        "creationDate": "jun 13, 2025, 9:22:44 a. m.",
+        "modifiedDate": "jun 13, 2025, 9:22:44 a. m.",
+        "type": "dir"
+      }
+    ],
+    "name": "docs",
+    "creationDate": "jun 13, 2025, 9:22:14 a. m.",
+    "modifiedDate": "jun 13, 2025, 9:22:14 a. m.",
+    "type": "dir"
+  }
+}
