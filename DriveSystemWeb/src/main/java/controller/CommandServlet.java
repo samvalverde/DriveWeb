@@ -242,6 +242,23 @@ public class CommandServlet extends HttpServlet {
                 }
                 break;
             }
+            case "download": {
+                String name = req.getParameter("name");
+                UserDrive drive = getDrive(username);
+                if (drive != null) {
+                    FileSystemNode node = drive.getCurrent().getChild(name);
+                    if (node instanceof FileNode) {
+                        resp.setContentType("text/plain");
+                        resp.setHeader("Content-Disposition", "attachment;filename=" + name);
+                        resp.getWriter().write(((FileNode) node).getContent());
+                    } else {
+                        resp.setContentType("text/plain");
+                        resp.getWriter().write("No es un archivo válido.");
+                    }
+                }
+                break;
+            }
+
             default: {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 resp.getWriter().write("Comando no válido.");

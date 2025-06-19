@@ -1,8 +1,198 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head><title>Bienvenido</title></head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Drive Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #4285f4;
+            color: white;
+            padding: 1rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        main {
+            padding: 2rem;
+            max-width: 900px;
+            margin: auto;
+        }
+        section {
+            background-color: white;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        input, textarea, button {
+            margin: 0.3rem 0.5rem 0.3rem 0;
+            padding: 0.4rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3367d6;
+        }
+        textarea {
+            vertical-align: top;
+        }
+        pre {
+            background-color: #e9ecef;
+            padding: 1rem;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
 <body>
-<h1>¡Deploy exitoso en Tomcat!</h1>
+    <header>Mi Drive Web</header>
+    <main>
+        <section>
+            <h3>Inicio de sesión</h3>
+            <input type="text" id="username" placeholder="Usuario">
+            <input type="number" id="quota" placeholder="Cuota en bytes">
+            <button onclick="createDrive()">Crear Drive</button>
+            <button onclick="listDir()">Entrar al Drive</button>
+        </section>
+
+        <section>
+            <h3>Administración de archivos y carpetas</h3>
+            <div>
+                <input type="text" id="dirname" placeholder="Nombre carpeta">
+                <button onclick="createDir()">Crear Carpeta</button>
+            </div>
+            <div>
+                <input type="text" id="filename" placeholder="Nombre archivo">
+                <textarea id="filecontent" placeholder="Contenido"></textarea>
+                <button onclick="createFile()">Crear Archivo</button>
+            </div>
+            <div>
+                <input type="text" id="cdname" placeholder="Ir a carpeta">
+                <button onclick="changeDir()">Cambiar Directorio</button>
+            </div>
+            <div>
+                <input type="text" id="viewfile" placeholder="Ver archivo">
+                <button onclick="viewFile()">Ver Archivo</button>
+            </div>
+            <div>
+                <input type="text" id="deletefile" placeholder="Eliminar archivo o carpeta">
+                <button onclick="deleteItem()">Eliminar</button>
+            </div>
+            <div>
+                <input type="text" id="propfile" placeholder="Propiedades de archivo/carpeta">
+                <button onclick="viewProperties()">Ver Propiedades</button>
+            </div>
+            <div>
+                <input type="text" id="downloadfile" placeholder="Nombre del archivo a descargar">
+                <button onclick="downloadFile()">Descargar Archivo</button>
+            </div>
+            <div>
+                <button onclick="listDir()">Listar Directorio</button>
+                <button onclick="checkUsage()">Espacio Usado</button>
+            </div>
+        </section>
+
+        <section>
+            <h3>Salida</h3>
+            <pre id="output"></pre>
+        </section>
+    </main>
+
+    <script>
+        const api = '/api/command';
+
+        function post(data, callback) {
+            fetch(api, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: new URLSearchParams(data)
+            }).then(res => res.text()).then(callback);
+        }
+
+        function getUser() {
+            return document.getElementById('username').value;
+        }
+
+        function createDrive() {
+            post({action: 'createDrive', user: getUser(), quota: document.getElementById('quota').value}, show);
+        }
+
+        function listDir() {
+            post({action: 'listDir', user: getUser()}, show);
+        }
+
+        function createDir() {
+            post({action: 'createDir', user: getUser(), name: document.getElementById('dirname').value}, show);
+        }
+
+        function createFile() {
+            post({
+                action: 'createFile',
+                user: getUser(),
+                name: document.getElementById('filename').value,
+                content: document.getElementById('filecontent').value
+            }, show);
+        }
+
+        function changeDir() {
+            post({action: 'cd', user: getUser(), name: document.getElementById('cdname').value}, show);
+        }
+
+        function viewFile() {
+            post({action: 'viewFile', user: getUser(), name: document.getElementById('viewfile').value}, show);
+        }
+
+        function deleteItem() {
+            post({action: 'delete', user: getUser(), name: document.getElementById('deletefile').value}, show);
+        }
+
+        function viewProperties() {
+            post({action: 'properties', user: getUser(), name: document.getElementById('propfile').value}, show);
+        }
+
+        function checkUsage() {
+            post({action: 'usage', user: getUser()}, show);
+        }
+
+        function downloadFile() {
+            const name = document.getElementById('downloadfile').value;
+            const user = getUser();
+            const url = `${api}?action=download&user=${encodeURIComponent(user)}&name=${encodeURIComponent(name)}`;
+
+            fetch(url)
+                .then(response => {
+                    if (response.headers.get("Content-Disposition")) {
+                        return response.blob();
+                    } else {
+                        return response.text();
+                    }
+                })
+                .then(data => {
+                    if (typeof data === "string") {
+                        show(data);
+                    } else {
+                        const a = document.createElement("a");
+                        a.href = URL.createObjectURL(data);
+                        a.download = name;
+                        a.click();
+                    }
+                });
+        }
+
+        function show(text) {
+            document.getElementById('output').innerText = text;
+        }
+    </script>
 </body>
 </html>
-
