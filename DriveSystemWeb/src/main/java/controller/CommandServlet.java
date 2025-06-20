@@ -39,6 +39,15 @@ public class CommandServlet extends HttpServlet {
         String username = req.getParameter("user");
 
         switch (action) {
+            case "login": {
+                if (DriveStorage.exists(username)) {
+                    resp.getWriter().write("OK");
+                } else {
+                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    resp.getWriter().write("Usuario no registrado");
+                }
+                break;
+            }
             case "createDrive": {
                 if (DriveStorage.exists(username)) {
                     resp.getWriter().write("Ya existe un drive para este usuario. No se puede sobrescribir.");
@@ -68,17 +77,37 @@ public class CommandServlet extends HttpServlet {
             case "createFile": {
                 String name = req.getParameter("name");
                 String content = req.getParameter("content");
+
                 UserDrive drive = getDrive(username);
-                if (drive != null && drive.hasSpaceFor(content.length())) {
-                    if (drive.getCurrent().getChild(name) != null) {
-                        resp.getWriter().write("Archivo ya existe.");
+                if (drive != null) {
+
+                    if (name == null || name.trim().isEmpty()) {
+                        resp.getWriter().write("El nombre del archivo es obligatorio.");
                         return;
                     }
-                    drive.getCurrent().addChild(new FileNode(name, content));
+
+                    // Validar que tenga extensión (ej. .txt, .java)
+                    if (!name.matches("^[\\w\\-\\.]+\\.[a-zA-Z0-9]+$")) {
+                        resp.getWriter().write("Nombre de archivo inválido. Debe incluir una extensión, como 'archivo.txt'.");
+                        return;
+                    }
+
+                    // Validar que no exista ya un archivo o directorio con ese nombre
+                    if (drive.getCurrent().getChild(name) != null) {
+                        resp.getWriter().write("Ya existe un archivo o directorio con ese nombre.");
+                        return;
+                    }
+
+                    // Validar espacio
+                    if (!drive.hasSpaceFor(content != null ? content.length() : 0)) {
+                        resp.getWriter().write("No hay espacio suficiente para crear el archivo.");
+                        return;
+                    }
+
+                    // Crear archivo (si no hay contenido, ponerlo vacío)
+                    drive.getCurrent().addChild(new FileNode(name, content != null ? content : ""));
                     DriveStorage.save(username, drive);
-                    resp.getWriter().write("Archivo creado");
-                } else {
-                    resp.getWriter().write("No hay espacio disponible");
+                    resp.getWriter().write("Archivo creado exitosamente.");
                 }
                 break;
             }
@@ -102,6 +131,10 @@ public class CommandServlet extends HttpServlet {
                     for (FileSystemNode node : drive.getCurrent().getChildren()) {
                         sb.append((node instanceof DirectoryNode ? "[DIR] " : "[FILE] "))
                           .append(node.getName()).append("\n");
+                    }
+                    // Mostrar la carpeta compartida si estamos en root
+                    if (drive.getCurrent() == drive.getRoot()) {
+                        sb.append("[DIR] shared\n");
                     }
                     resp.getWriter().write(sb.toString());
                 }
@@ -187,33 +220,27 @@ public class CommandServlet extends HttpServlet {
                 break;
             }
             case "share": {
-                String source = req.getParameter("source");
+                String name = req.getParameter("name");
+                String fromUser = req.getParameter("user");
                 String targetUser = req.getParameter("target");
 
-                UserDrive drive = getDrive(username);
-                UserDrive targetDrive = getDrive(targetUser);
+                UserDrive fromDrive = getDrive(fromUser);
+                UserDrive toDrive = getDrive(targetUser);
 
-                if (drive == null || targetDrive == null) {
-                    resp.getWriter().write("Uno de los usuarios no tiene drive activo.");
-                    break;
+                if (fromDrive != null && toDrive != null) {
+                    FileSystemNode node = fromDrive.getCurrent().getChild(name);
+                    if (node != null) {
+                        FileSystemNode copia = node.deepCopy();
+                        toDrive.getShared().addChild(copia);
+
+                        DriveStorage.save(targetUser, toDrive);
+                        resp.getWriter().write("Compartido con éxito");
+                    } else {
+                        resp.getWriter().write("No se encontró el archivo o carpeta para compartir.");
+                    }
+                } else {
+                    resp.getWriter().write("Usuario de origen o destino no válido.");
                 }
-
-                FileSystemNode node = drive.getCurrent().getChild(source);
-                if (node == null) {
-                    resp.getWriter().write("Elemento a compartir no encontrado.");
-                    break;
-                }
-
-                if (targetDrive.getShared().getChild(node.getName()) != null) {
-                    resp.getWriter().write("Ya existe un archivo/directorio con ese nombre en 'shared'.");
-                    break;
-                }
-
-                FileSystemNode copia = drive.deepCopy(node);
-                targetDrive.getShared().addChild(copia);
-                DriveStorage.save(targetUser, targetDrive);
-
-                resp.getWriter().write("Compartido exitosamente a " + targetUser);
                 break;
             }
             case "editFile": {

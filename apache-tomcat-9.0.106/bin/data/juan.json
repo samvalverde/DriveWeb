@@ -25,11 +25,32 @@
             "creationDate": "jun 13, 2025, 9:22:44 a. m.",
             "modifiedDate": "jun 13, 2025, 9:22:44 a. m.",
             "type": "dir"
+          },
+          {
+            "content": "esto es una prueba de txt",
+            "name": "bases.txt",
+            "creationDate": "jun 13, 2025, 10:46:05 a. m.",
+            "modifiedDate": "jun 13, 2025, 10:46:05 a. m.",
+            "type": "file"
+          },
+          {
+            "content": "hola",
+            "name": "prueba.pdf",
+            "creationDate": "jun 18, 2025, 6:58:19 p. m.",
+            "modifiedDate": "jun 18, 2025, 6:58:19 p. m.",
+            "type": "file"
           }
         ],
         "name": "docs",
         "creationDate": "jun 13, 2025, 9:22:14 a. m.",
         "modifiedDate": "jun 13, 2025, 9:22:14 a. m.",
+        "type": "dir"
+      },
+      {
+        "children": [],
+        "name": "prueba",
+        "creationDate": "jun 19, 2025, 8:51:17 p. m.",
+        "modifiedDate": "jun 19, 2025, 8:51:17 p. m.",
         "type": "dir"
       }
     ],
@@ -67,6 +88,20 @@
         "creationDate": "jun 13, 2025, 9:22:44 a. m.",
         "modifiedDate": "jun 13, 2025, 9:22:44 a. m.",
         "type": "dir"
+      },
+      {
+        "content": "esto es una prueba de txt",
+        "name": "bases.txt",
+        "creationDate": "jun 13, 2025, 10:46:05 a. m.",
+        "modifiedDate": "jun 13, 2025, 10:46:05 a. m.",
+        "type": "file"
+      },
+      {
+        "content": "hola",
+        "name": "prueba.pdf",
+        "creationDate": "jun 18, 2025, 6:58:19 p. m.",
+        "modifiedDate": "jun 18, 2025, 6:58:19 p. m.",
+        "type": "file"
       }
     ],
     "name": "docs",

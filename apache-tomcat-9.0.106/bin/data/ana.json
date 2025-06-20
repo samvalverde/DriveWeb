@@ -38,6 +38,13 @@
         "creationDate": "jun 13, 2025, 10:21:29 a. m.",
         "modifiedDate": "jun 13, 2025, 10:21:29 a. m.",
         "type": "dir"
+      },
+      {
+        "content": "esto es una prueba de txt",
+        "name": "bases.txt",
+        "creationDate": "jun 18, 2025, 7:34:40 p. m.",
+        "modifiedDate": "jun 18, 2025, 7:34:40 p. m.",
+        "type": "file"
       }
     ],
     "name": "shared",

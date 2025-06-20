@@ -53,5 +53,16 @@ public class DirectoryNode extends FileSystemNode {
         }
         return size;
     }
+    
+    @Override
+    public FileSystemNode deepCopy() {
+        DirectoryNode copia = new DirectoryNode(getName());
+        for (FileSystemNode child : children) {
+            FileSystemNode childCopy = child.deepCopy();
+            copia.addChild(childCopy);
+        }
+        return copia;
+    }
+
 }
 

@@ -32,6 +32,8 @@ public class UserDrive {
         if ("..".equals(name) && current.getParent() != null) {
             current = current.getParent();
             return true;
+        } else if ("shared".equals(name)) {
+            current = shared;
         } else {
             FileSystemNode node = current.getChild(name);
             if (node instanceof DirectoryNode) {
@@ -99,7 +101,7 @@ public class UserDrive {
 
     public void restoreParents() {
         assignParents(root, null);
-        assignParents(shared, null);
+        assignParents(shared, root);
         if (current != null) {
             String currentPath = current.getPath();
             DirectoryNode found = findNodeByPath(currentPath, root);
