@@ -111,7 +111,12 @@ async function entrar(nombre) {
 async function listar() {
     const res = await enviarComando({ action: "listDir", user: usuario });
     const ruta = await enviarComando({ action: "pwd", user: usuario });
-    document.getElementById("ruta").innerText = ruta;
+    
+    if (ruta.trim().startsWith("Comando no válido")) {
+        document.getElementById("ruta").innerText = "/";
+    } else {
+        document.getElementById("ruta").innerText = ruta;
+    }
 
     const contenedor = document.getElementById("driveArea");
     contenedor.innerHTML = "";

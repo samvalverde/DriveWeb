@@ -4,7 +4,8 @@
  */
 package model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -55,6 +56,13 @@ public class DirectoryNode extends FileSystemNode {
     }
     
     @Override
+
+    public String getPath() {
+    if (getParent() == null) return "/";
+    String parentPath = ((DirectoryNode) getParent()).getPath();
+    return ("/".equals(parentPath) ? "" : parentPath) + "/" + getName();
+    }   
+    
     public FileSystemNode deepCopy() {
         DirectoryNode copia = new DirectoryNode(getName());
         for (FileSystemNode child : children) {

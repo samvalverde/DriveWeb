@@ -24,6 +24,11 @@ public class UserDrive {
         this.current = root;
     }
 
+    public String getCurrentPath() {
+    return current.getPath();
+    }
+
+
     public synchronized DirectoryNode getCurrent() {
         return current;
     }
