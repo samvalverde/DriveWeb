@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Drive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f5f7fa; }
+        header { background: #1a73e8; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        header h1 { margin: 0; font-size: 1.6rem; }
+        #toolbar { padding: 1rem 2rem; background: #ffffff; border-bottom: 1px solid #ddd; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        #toolbar button { padding: 0.6rem 1rem; background-color: #1a73e8; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #toolbar button:hover { background-color: #1666c1; }
+        #pathBar { padding: 0.5rem 2rem; font-size: 0.9rem; background: #eef1f5; border-bottom: 1px solid #ccc; }
+        #driveArea { padding: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+        .item { background: white; border-radius: 10px; padding: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.1); text-align: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .item:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .item i { font-size: 2.2rem; margin-bottom: 0.5rem; color: #1a73e8; }
+        .item .name { word-break: break-word; font-size: 0.95rem; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 2rem; border-radius: 8px; width: 300px; }
+        .modal-content input, .modal-content textarea { width: 100%; margin: 0.5rem 0; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
+        .modal-content button { width: 100%; margin-top: 0.5rem; }
+    </style>
+</head>
+<body>
+<header>
+    <h1><i class="fa-solid fa-cloud"></i> Mi Drive</h1>
+    <div>
+        Usuario: <span id="user"></span>
+        <button onclick="logout()" style="margin-left: 1rem; background:#e53935">Cerrar sesión</button>
+    </div>
+</header>
+
+<div id="toolbar">
+    <button onclick="mostrarModal('archivo')"><i class="fa fa-file"></i> Nuevo Archivo</button>
+    <button onclick="mostrarModal('carpeta')"><i class="fa fa-folder"></i> Nueva Carpeta</button>
+    <button onclick="mostrarModal('copiar')"><i class="fa fa-copy"></i> Copiar</button>
+    <button onclick="mostrarModal('mover')"><i class="fa fa-arrows-alt"></i> Mover</button>
+    <button onclick="mostrarModal('eliminar')"><i class="fa fa-trash"></i> Eliminar</button>
+    <button onclick="mostrarModal('compartir')"><i class="fa fa-share"></i> Compartir</button>
+</div>
+
+<div id="pathBar">Directorio actual: <span id="ruta"></span></div>
+<div id="driveArea"></div>
+<div id="modales"></div>
+
+<script>
+    const usuario = sessionStorage.getItem("usuario");
+    if (!usuario) window.location.href = "index.html";
+    document.getElementById("user").innerText = usuario;
+
+    function logout() {
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+    }
+
+    function mostrarModal(tipo) {
+        const m = document.createElement("div");
+        m.className = "modal";
+
+        let contenido = "";
+        if (tipo === 'archivo') {
+            contenido = `<div class='modal-content'><h3>Nuevo Archivo</h3><input id='name' placeholder='Nombre.txt'><textarea id='content' placeholder='Contenido'></textarea><button onclick='crearArchivo()'>Crear</button></div>`;
+        } else if (tipo === 'carpeta') {
+            contenido = `<div class='modal-content'><h3>Nueva Carpeta</h3><input id='name' placeholder='Nombre'><button onclick='crearDirectorio()'>Crear</button></div>`;
+        } else if (tipo === 'copiar' || tipo === 'mover') {
+            contenido = `<div class='modal-content'><h3>${tipo === 'copiar' ? 'Copiar' : 'Mover'}</h3><input id='source' placeholder='Nombre de origen'><input id='target' placeholder='Directorio destino'><button onclick='${tipo}(document.getElementById("source").value, document.getElementById("target").value)'>Aceptar</button></div>`;
+        } else if (tipo === 'eliminar') {
+            contenido = `<div class='modal-content'><h3>Eliminar</h3><input id='name' placeholder='Nombre a eliminar'><button onclick='eliminar()'>Eliminar</button></div>`;
+        } else if (tipo === 'compartir') {
+            contenido = `<div class='modal-content'><h3>Compartir</h3><input id='name' placeholder='Archivo o carpeta a compartir'><input id='toUser' placeholder='Usuario destino'><button onclick='compartir()'>Compartir</button></div>`;
+        }
+
+        m.innerHTML = contenido;
+        m.onclick = e => { if (e.target === m) m.remove(); };
+        document.body.appendChild(m);
+    }
+
+    function cerrarModal() {
+        const m = document.querySelector(".modal");
+        if (m) m.remove();
+    }
+
+    async function crearArchivo() {
+        const name = document.getElementById("name").value;
+        const content = document.getElementById("content").value;
+        await enviarComando({ action: "createFile", user: usuario, name, content });
+        cerrarModal(); listar();
+    }
+
+    async function crearDirectorio() {
+        const name = document.getElementById("name").value;
+        await enviarComando({ action: "createDir", user: usuario, name });
+        cerrarModal(); listar();
+    }
+
+    async function copiar(source, target) {
+        await enviarComando({ action: "copy", user: usuario, source, target });
+        cerrarModal(); listar();
+    }
+
+    async function mover(source, target) {
+        await enviarComando({ action: "move", user: usuario, source, target });
+        cerrarModal(); listar();
+    }
+
+    async function eliminar() {
+        const name = document.getElementById("name").value;
+        await enviarComando({ action: "delete", user: usuario, name });
+        cerrarModal(); listar();
+    }
+
+    async function compartir() {
+        const name = document.getElementById("name").value;
+        const target = document.getElementById("toUser").value;
+        await enviarComando({ action: "share", user: usuario, name, target });
+        cerrarModal();
+        listar();
+    }
+
+
+    async function subir() {
+        await enviarComando({ action: "cd", user: usuario, name: ".." });
+        listar();
+    }
+
+    async function entrar(nombre) {
+        await enviarComando({ action: "cd", user: usuario, name: nombre });
+        listar();
+    }
+
+    async function listar() {
+        const res = await enviarComando({ action: "listDir", user: usuario });
+        const ruta = await enviarComando({ action: "pwd", user: usuario });
+        document.getElementById("ruta").innerText = ruta;
+
+        const contenedor = document.getElementById("driveArea");
+        contenedor.innerHTML = "";
+
+        const back = document.createElement("div");
+        back.className = "item";
+        back.innerHTML = `<i class="fa-solid fa-level-up-alt"></i><div class="name">..</div>`;
+        back.onclick = subir;
+        contenedor.appendChild(back);
+
+        const lineas = res.split("\n").filter(l => l.trim() !== "");
+        for (let l of lineas) {
+            const tipo = l.startsWith("[DIR]") ? "folder" : "file";
+            const nombre = l.replace("[DIR] ", "").replace("[FILE] ", "");
+
+            const div = document.createElement("div");
+            div.className = "item";
+            div.innerHTML = `<i class="fa-solid fa-${tipo === 'folder' ? 'folder' : 'file'}"></i><div class="name">${nombre}</div>`;
+            if (tipo === "folder") {
+                div.onclick = () => entrar(nombre);
+            } else {
+                div.onclick = async () => {
+                    const contenido = await enviarComando({ action: "viewFile", user: usuario, name: nombre });
+                    alert("Contenido de archivo:\n\n" + contenido);
+                };
+            }
+            contenedor.appendChild(div);
+        }
+
+        // Mostrar carpeta compartida si estamos en raíz
+        if (ruta.trim() === "/") {
+            const shared = document.createElement("div");
+            shared.className = "item";
+            shared.innerHTML = `<i class="fa-solid fa-folder-open"></i><div class="name">shared</div>`;
+            shared.onclick = () => entrar("shared");
+            contenedor.appendChild(shared);
+        }
+    }
+
+    async function enviarComando(params) {
+        const form = new URLSearchParams();
+        for (let key in params) form.append(key, params[key]);
+        const res = await fetch("api/command", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: form
+        });
+        return res.text();
+    }
+
+    listar();
+</script>
+</body>
+</html>

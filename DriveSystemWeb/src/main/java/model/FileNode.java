@@ -39,5 +39,11 @@ public class FileNode extends FileSystemNode {
         this.content = content;
         updateModified();
     }
+    
+    @Override
+    public FileSystemNode deepCopy() {
+        return new FileNode(getName(), getContent());
+    }
+
 }
 

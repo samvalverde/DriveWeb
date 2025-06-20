@@ -18,6 +18,7 @@ public abstract class FileSystemNode {
     protected String creationDate;
     protected String modifiedDate;
     public String type; // requerido por RuntimeTypeAdapterFactory
+    public abstract FileSystemNode deepCopy();
 
     public FileSystemNode(String name) {
         this.name = name;
