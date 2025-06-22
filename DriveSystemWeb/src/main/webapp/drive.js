@@ -13,11 +13,12 @@ function mostrarModal(tipo) {
 
     let contenido = "";
     if (tipo === 'archivo') {
-        contenido = `
+    contenido = `
         <div class='modal-content'>
             <h3>Nuevo Archivo</h3>
             <input id='name' placeholder='Nombre.txt'>
             <textarea id='content' placeholder='Contenido'></textarea>
+            <div id="errorArchivo" style="color: red; font-size: 0.9rem; margin-top: 0.5rem;"></div>
             <button onclick='crearArchivo()'>Crear</button>
         </div>`;
     } else if (tipo === 'carpeta') {
@@ -63,11 +64,32 @@ function cerrarModal() {
 }
 
 async function crearArchivo() {
-    const name = document.getElementById("name").value;
+    const name = document.getElementById("name").value.trim();
     const content = document.getElementById("content").value;
-    await enviarComando({ action: "createFile", user: usuario, name, content });
-    cerrarModal(); listar();
+    const errorBox = document.getElementById("errorArchivo");
+
+    if (!name) {
+        errorBox.innerText = "⚠️ El nombre del archivo es obligatorio.";
+        return;
+    }
+
+    const respuesta = await enviarComando({ action: "createFile", user: usuario, name, content });
+
+    // Verifica la respuesta del servidor
+    if (respuesta.includes("Ya existe")) {
+        errorBox.innerText = "Ya existe un archivo o directorio con ese nombre.";
+    } else if (respuesta.includes("inválido")) {
+        errorBox.innerText = "Nombre de archivo invalido. Usa una extension, por ejemplo 'nota.txt'.";
+    } else if (respuesta.includes("espacio")) {
+        errorBox.innerText = "No hay espacio suficiente para crear el archivo.";
+    } else if (respuesta.includes("Archivo creado")) {
+        cerrarModal();
+        listar();
+    } else {
+        errorBox.innerText = "Error inesperado: " + respuesta;
+    }
 }
+
 
 async function crearDirectorio() {
     const name = document.getElementById("name").value;
@@ -140,8 +162,9 @@ async function listar() {
         } else {
             div.onclick = async () => {
                 const contenido = await enviarComando({ action: "viewFile", user: usuario, name: nombre });
-                alert("Contenido de archivo:\n\n" + contenido);
+                mostrarVistaArchivo(nombre, contenido);
             };
+
         }
         contenedor.appendChild(div);
     }
@@ -165,5 +188,22 @@ async function enviarComando(params) {
     });
     return res.text();
 }
+
+function mostrarVistaArchivo(nombre, contenido) {
+  const m = document.createElement("div");
+  m.className = "modal";
+
+  m.innerHTML = `
+    <div class="modal-content">
+      <h3>${nombre}</h3>
+      <textarea readonly style="width: 100%; height: 200px;">${contenido}</textarea>
+      <button onclick="cerrarModal()">Cerrar</button>
+    </div>
+  `;
+
+  m.onclick = e => { if (e.target === m) m.remove(); };
+  document.body.appendChild(m);
+}
+
 
 listar();

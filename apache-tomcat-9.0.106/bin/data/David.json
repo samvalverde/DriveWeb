@@ -1,0 +1,25 @@
+{
+  "username": "David",
+  "quota": 1000,
+  "root": {
+    "children": [],
+    "name": "root",
+    "creationDate": "jun 21, 2025, 9:24:17 p. m.",
+    "modifiedDate": "jun 21, 2025, 9:24:17 p. m.",
+    "type": "dir"
+  },
+  "shared": {
+    "children": [],
+    "name": "shared",
+    "creationDate": "jun 21, 2025, 9:24:17 p. m.",
+    "modifiedDate": "jun 21, 2025, 9:24:17 p. m.",
+    "type": "dir"
+  },
+  "current": {
+    "children": [],
+    "name": "root",
+    "creationDate": "jun 21, 2025, 9:24:17 p. m.",
+    "modifiedDate": "jun 21, 2025, 9:24:17 p. m.",
+    "type": "dir"
+  }
+}
