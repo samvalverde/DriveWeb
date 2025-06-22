@@ -1,0 +1,25 @@
+{
+  "username": "sdafsaf",
+  "quota": -13,
+  "root": {
+    "children": [],
+    "name": "root",
+    "creationDate": "jun 21, 2025, 9:27:05 p. m.",
+    "modifiedDate": "jun 21, 2025, 9:27:05 p. m.",
+    "type": "dir"
+  },
+  "shared": {
+    "children": [],
+    "name": "shared",
+    "creationDate": "jun 21, 2025, 9:27:05 p. m.",
+    "modifiedDate": "jun 21, 2025, 9:27:05 p. m.",
+    "type": "dir"
+  },
+  "current": {
+    "children": [],
+    "name": "root",
+    "creationDate": "jun 21, 2025, 9:27:05 p. m.",
+    "modifiedDate": "jun 21, 2025, 9:27:05 p. m.",
+    "type": "dir"
+  }
+}

@@ -1,7 +1,38 @@
+  document.addEventListener("DOMContentLoaded", () => {
+  const quotaInput = document.getElementById("quota");
+
+  // Bloquea entrada por teclado (excepto flechas ↑ ↓)
+  quotaInput.addEventListener("keydown", function(e) {
+    // Permitir flechas ↑ ↓, tab, backspace
+    const allowedKeys = ["ArrowUp", "ArrowDown", "Tab", "Backspace"];
+    if (!allowedKeys.includes(e.key)) {
+      e.preventDefault();
+    }
+  });
+
+  // Corrige si se pega número negativo o cero
+  quotaInput.addEventListener("input", function () {
+    if (this.value < 1) this.value = 1;
+  });
+});
+
+
 async function registrar(e) {
   e.preventDefault();
-  const user = document.getElementById("user").value;
-  const quota = document.getElementById("quota").value;
+  const user = document.getElementById("user").value.trim();
+  const quota = parseInt(document.getElementById("quota").value);
+  const mensaje = document.getElementById("mensaje");
+
+  // Validaciones
+  if (!user) {
+    mensaje.innerText = "⚠️ Debes ingresar un nombre de usuario.";
+    return;
+  }
+
+  if (isNaN(quota) || quota <= 0) {
+    mensaje.innerText = "⚠️ La cuota debe ser un número mayor a 0.";
+    return;
+  }
 
   const form = new URLSearchParams();
   form.append("action", "createDrive");
@@ -15,7 +46,7 @@ async function registrar(e) {
   });
 
   const msg = await res.text();
-  document.getElementById("mensaje").innerText = msg;
+  mensaje.innerText = msg;
 
   if (res.status === 200) {
     sessionStorage.setItem("usuario", user);

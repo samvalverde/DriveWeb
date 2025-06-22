@@ -11,7 +11,7 @@
     <h2>Registro</h2>
     <form onsubmit="return registrar(event)">
       <input id="user" required placeholder="Nombre de usuario">
-      <input id="quota" required placeholder="Espacio en bytes" type="number">
+      <input id="quota" type="number" min="1" step="1">
       <button type="submit">Crear Drive</button>
     </form>
     <div id="mensaje" class="mensaje"></div>
