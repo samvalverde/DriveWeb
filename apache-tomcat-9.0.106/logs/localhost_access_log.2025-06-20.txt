@@ -1025,3 +1025,11 @@
 0:0:0:0:0:0:0:1 - - [20/Jun/2025:14:33:51 -0600] "GET /DriveSystemWeb/register.html HTTP/1.1" 304 -
 0:0:0:0:0:0:0:1 - - [20/Jun/2025:14:33:51 -0600] "GET /DriveSystemWeb/register.css HTTP/1.1" 200 1159
 0:0:0:0:0:0:0:1 - - [20/Jun/2025:14:33:51 -0600] "GET /DriveSystemWeb/register.js HTTP/1.1" 200 688
+127.0.0.1 - - [20/Jun/2025:14:50:04 -0600] "HEAD /netbeans-tomcat-status-test HTTP/1.1" 404 -
+127.0.0.1 - admin [20/Jun/2025:14:50:04 -0600] "GET /manager/text/ HTTP/1.1" 200 44
+127.0.0.1 - - [20/Jun/2025:14:50:04 -0600] "HEAD /netbeans-tomcat-status-test HTTP/1.1" 404 -
+127.0.0.1 - admin [20/Jun/2025:14:50:04 -0600] "GET /manager/text/ HTTP/1.1" 200 44
+127.0.0.1 - - [20/Jun/2025:14:50:04 -0600] "HEAD /netbeans-tomcat-status-test HTTP/1.1" 404 -
+127.0.0.1 - admin [20/Jun/2025:14:50:04 -0600] "GET /manager/text/ HTTP/1.1" 200 44
+127.0.0.1 - - [20/Jun/2025:14:50:05 -0600] "HEAD /netbeans-tomcat-status-test HTTP/1.1" 404 -
+127.0.0.1 - admin [20/Jun/2025:14:50:05 -0600] "GET /manager/text/ HTTP/1.1" 200 44
