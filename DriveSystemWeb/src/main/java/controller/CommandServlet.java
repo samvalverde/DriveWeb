@@ -51,7 +51,7 @@ public class CommandServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         String username = req.getParameter("user");
 
@@ -207,14 +207,29 @@ public class CommandServlet extends HttpServlet {
                 break;
             }
             case "copy": {
+                String nombreArchivo = req.getParameter("nombreNodo");
+                String destino = req.getParameter("destino");
+
+                UserDrive drive = DriveStorage.getUserDrive(username);
+                boolean exito = drive.copiarArchivo(nombreArchivo, destino);
+
+                if (exito) {
+                    DriveStorage.saveUserDrive(username);
+                    resp.getWriter().write("Archivo copiado exitosamente.");
+                } else {
+                    resp.getWriter().write("Error al copiar: archivo no encontrado, duplicado o sin espacio.");
+                }
+                break;
+            }
+            case "move": {
                 String source = req.getParameter("source");
                 String target = req.getParameter("target");
                 UserDrive drive = getDrive(username);
                 if (drive != null) {
                     try {
-                        drive.copyTo(source, target);
+                        drive.moveTo(source, target);
                         DriveStorage.save(username, drive);
-                        resp.getWriter().write("Copiado");
+                        resp.getWriter().write("Movido");
                     } catch (IllegalArgumentException e) {
                         resp.getWriter().write("Error: " + e.getMessage());
                     }
@@ -235,21 +250,6 @@ public class CommandServlet extends HttpServlet {
                     resp.getWriter().write("Archivo cargado exitosamente.");
                 } else {
                     resp.getWriter().write("Error: archivo duplicado o sin espacio.");
-                }
-                break;
-            }
-            case "move": {
-                String source = req.getParameter("source");
-                String target = req.getParameter("target");
-                UserDrive drive = getDrive(username);
-                if (drive != null) {
-                    try {
-                        drive.moveTo(source, target);
-                        DriveStorage.save(username, drive);
-                        resp.getWriter().write("Movido");
-                    } catch (IllegalArgumentException e) {
-                        resp.getWriter().write("Error: " + e.getMessage());
-                    }
                 }
                 break;
             }
