@@ -53,3 +53,119 @@
 19-Jun-2025 20:51:02.383 INFO [http-nio-8080-exec-4] org.apache.jasper.servlet.TldScanner.scanJars Al menos un JAR, que se ha explorado buscando TLDs, aún no contenía TLDs. Activar historial de depuración para este historiador para una completa lista de los JARs que fueron explorados y de los que nos se halló TLDs. Saltarse JARs no necesarios durante la exploración puede dar lugar a una mejora de tiempo significativa en el arranque y compilación de JSP .
 19-Jun-2025 20:51:02.388 INFO [http-nio-8080-exec-4] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [V:\Documentos\Sistemas Operativos\DriveWeb\apache-tomcat-9.0.106\conf\Catalina\localhost\DriveSystemWeb.xml] has finished in [215] ms
 19-Jun-2025 20:51:02.404 INFO [http-nio-8080-exec-6] org.apache.catalina.util.LifecycleBase.start The start() method was called on component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/DriveSystemWeb]] after start() had already been called. The second call will be ignored.
+19-Jun-2025 21:18:39.311 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Nombre de la versión del servidor: Apache Tomcat/9.0.106
+19-Jun-2025 21:18:39.317 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:                      Jun 5 2025 19:02:30 UTC
+19-Jun-2025 21:18:39.317 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Número de versión de servidor:     9.0.106.0
+19-Jun-2025 21:18:39.317 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:                           Windows 11
+19-Jun-2025 21:18:39.317 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Versión de Systema Operativo:      10.0
+19-Jun-2025 21:18:39.317 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Arquitectura:                      amd64
+19-Jun-2025 21:18:39.317 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:                         C:\Program Files\Java\jdk-23
+19-Jun-2025 21:18:39.318 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:                       23.0.2+7-58
+19-Jun-2025 21:18:39.318 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Vededor JVM:                       Oracle Corporation
+19-Jun-2025 21:18:39.318 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:                     C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106
+19-Jun-2025 21:18:39.318 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:                     C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106
+19-Jun-2025 21:18:39.331 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             --add-opens=java.base/java.lang=ALL-UNNAMED
+19-Jun-2025 21:18:39.331 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
+19-Jun-2025 21:18:39.332 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+19-Jun-2025 21:18:39.332 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             --add-opens=java.base/java.io=ALL-UNNAMED
+19-Jun-2025 21:18:39.332 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             --add-opens=java.base/java.util=ALL-UNNAMED
+19-Jun-2025 21:18:39.332 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+19-Jun-2025 21:18:39.332 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+19-Jun-2025 21:18:39.332 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             -Djava.util.logging.config.file=C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\conf\logging.properties
+19-Jun-2025 21:18:39.332 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+19-Jun-2025 21:18:39.332 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             -Djdk.tls.ephemeralDHKeySize=2048
+19-Jun-2025 21:18:39.332 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+19-Jun-2025 21:18:39.332 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             -Dsun.io.useCanonCaches=false
+19-Jun-2025 21:18:39.333 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             -Dignore.endorsed.dirs=
+19-Jun-2025 21:18:39.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             -Dcatalina.base=C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106
+19-Jun-2025 21:18:39.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             -Dcatalina.home=C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106
+19-Jun-2025 21:18:39.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument:             -Djava.io.tmpdir=C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\temp
+19-Jun-2025 21:18:39.381 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent La biblioteca nativa de Apache Tomcat basada en ARP que permite un rendimiento óptimo en entornos de desarrollo no ha sido hallada en java.library.path: [C:\Program Files\Java\jdk-23\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python313\Scripts\;C:\Python313\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Users\antho\AppData\Local\Microsoft\WindowsApps;C:\Users\antho\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\antho\AppData\Local\GitHubDesktop\bin;C:\Users\antho\AppData\Local\gitkraken\bin;C:\Users\antho\AppData\Roaming\npm;.]
+19-Jun-2025 21:18:39.995 INFO [main] org.apache.coyote.AbstractProtocol.init Inicializando el manejador de protocolo ["http-nio-8080"]
+
+19-Jun-2025 21:18:40.050 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [1105] milliseconds
+19-Jun-2025 21:18:40.188 INFO [main] org.apache.catalina.core.StandardService.startInternal Arrancando servicio [Catalina]
+19-Jun-2025 21:18:40.188 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.106]
+19-Jun-2025 21:18:40.214 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Desplieque del descriptor de configuración [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\conf\Catalina\localhost\DriveSystemWeb.xml]
+19-Jun-2025 21:18:40.240 WARNING [main] org.apache.catalina.startup.HostConfig.deployDescriptor The path attribute with value [/DriveSystemWeb] in deployment descriptor [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\conf\Catalina\localhost\DriveSystemWeb.xml] has been ignored
+19-Jun-2025 21:18:40.293 SEVERE [main] org.apache.catalina.startup.HostConfig.deployDescriptor Error durante el despliegue del descriptor de configuración [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\conf\Catalina\localhost\DriveSystemWeb.xml]
+	java.lang.IllegalStateException: Error starting child
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:602)
+		at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:571)
+		at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:603)
+		at org.apache.catalina.startup.HostConfig.deployDescriptor(HostConfig.java:680)
+		at org.apache.catalina.startup.HostConfig$DeployDescriptor.run(HostConfig.java:1839)
+		at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:76)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:124)
+		at org.apache.catalina.startup.HostConfig.deployDescriptors(HostConfig.java:575)
+		at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:466)
+		at org.apache.catalina.startup.HostConfig.start(HostConfig.java:1579)
+		at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:312)
+		at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:109)
+		at org.apache.catalina.util.LifecycleBase.setStateInternal(LifecycleBase.java:389)
+		at org.apache.catalina.util.LifecycleBase.setState(LifecycleBase.java:336)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:776)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:721)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:76)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:148)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:211)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:412)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:874)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:739)
+		at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:345)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:476)
+	Caused by: org.apache.catalina.LifecycleException: Failed to start component [org.apache.catalina.webresources.StandardRoot@6d026701]
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:406)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.StandardContext.resourcesStart(StandardContext.java:4172)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4294)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:599)
+		... 35 more
+	Caused by: java.lang.IllegalArgumentException: The main resource set specified [V:\Documentos\Sistemas Operativos\DriveWeb\DriveSystemWeb\target\DriveSystemWeb-1.0-SNAPSHOT] is not a directory or war file, or is not readable (it does not exist or permissions to access it are missing)
+		at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:758)
+		at org.apache.catalina.webresources.StandardRoot.startInternal(StandardRoot.java:715)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 39 more
+19-Jun-2025 21:18:40.367 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\conf\Catalina\localhost\DriveSystemWeb.xml] has finished in [145] ms
+19-Jun-2025 21:18:40.369 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Desplegando el directorio [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\webapps\docs] de la aplicación web
+19-Jun-2025 21:18:41.032 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\webapps\docs] has finished in [663] ms
+19-Jun-2025 21:18:41.032 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Desplegando el directorio [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\webapps\examples] de la aplicación web
+19-Jun-2025 21:18:42.099 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\webapps\examples] has finished in [1.065] ms
+19-Jun-2025 21:18:42.100 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Desplegando el directorio [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\webapps\host-manager] de la aplicación web
+19-Jun-2025 21:18:42.185 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\webapps\host-manager] has finished in [84] ms
+19-Jun-2025 21:18:42.185 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Desplegando el directorio [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\webapps\manager] de la aplicación web
+19-Jun-2025 21:18:42.275 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\webapps\manager] has finished in [89] ms
+19-Jun-2025 21:18:42.275 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Desplegando el directorio [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\webapps\ROOT] de la aplicación web
+19-Jun-2025 21:18:42.356 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\webapps\ROOT] has finished in [81] ms
+19-Jun-2025 21:18:42.365 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+19-Jun-2025 21:18:42.406 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [2354] milliseconds
+19-Jun-2025 21:19:10.679 INFO [http-nio-8080-exec-9] org.apache.catalina.startup.HostConfig.undeploy Repliegue (undeploy) de la aplicación web que tiene como trayectoria de contexto [/DriveSystemWeb]
+19-Jun-2025 21:19:10.810 INFO [http-nio-8080-exec-7] org.apache.catalina.startup.HostConfig.deployDescriptor Desplieque del descriptor de configuración [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\conf\Catalina\localhost\DriveSystemWeb.xml]
+19-Jun-2025 21:19:10.813 WARNING [http-nio-8080-exec-7] org.apache.catalina.startup.HostConfig.deployDescriptor The path attribute with value [/DriveSystemWeb] in deployment descriptor [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\conf\Catalina\localhost\DriveSystemWeb.xml] has been ignored
+19-Jun-2025 21:19:11.265 INFO [http-nio-8080-exec-7] org.apache.jasper.servlet.TldScanner.scanJars Al menos un JAR, que se ha explorado buscando TLDs, aún no contenía TLDs. Activar historial de depuración para este historiador para una completa lista de los JARs que fueron explorados y de los que nos se halló TLDs. Saltarse JARs no necesarios durante la exploración puede dar lugar a una mejora de tiempo significativa en el arranque y compilación de JSP .
+19-Jun-2025 21:19:11.279 INFO [http-nio-8080-exec-7] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\conf\Catalina\localhost\DriveSystemWeb.xml] has finished in [469] ms
+19-Jun-2025 21:19:11.284 INFO [http-nio-8080-exec-6] org.apache.catalina.util.LifecycleBase.start The start() method was called on component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/DriveSystemWeb]] after start() had already been called. The second call will be ignored.
+19-Jun-2025 23:00:01.025 INFO [http-nio-8080-exec-16] org.apache.catalina.startup.HostConfig.undeploy Repliegue (undeploy) de la aplicación web que tiene como trayectoria de contexto [/DriveSystemWeb]
+19-Jun-2025 23:01:25.019 INFO [http-nio-8080-exec-19] org.apache.catalina.startup.HostConfig.deployDescriptor Desplieque del descriptor de configuración [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\conf\Catalina\localhost\DriveSystemWeb.xml]
+19-Jun-2025 23:01:25.019 WARNING [http-nio-8080-exec-19] org.apache.catalina.startup.HostConfig.deployDescriptor The path attribute with value [/DriveSystemWeb] in deployment descriptor [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\conf\Catalina\localhost\DriveSystemWeb.xml] has been ignored
+19-Jun-2025 23:01:25.251 INFO [http-nio-8080-exec-19] org.apache.jasper.servlet.TldScanner.scanJars Al menos un JAR, que se ha explorado buscando TLDs, aún no contenía TLDs. Activar historial de depuración para este historiador para una completa lista de los JARs que fueron explorados y de los que nos se halló TLDs. Saltarse JARs no necesarios durante la exploración puede dar lugar a una mejora de tiempo significativa en el arranque y compilación de JSP .
+19-Jun-2025 23:01:25.258 INFO [http-nio-8080-exec-19] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [C:\Users\antho\Desktop\Escritorio\TEC\2025\Primer Semestre\Principios de Sistemas Operativos\Proyecto\Proyecto 3\DriveWeb\apache-tomcat-9.0.106\conf\Catalina\localhost\DriveSystemWeb.xml] has finished in [238] ms
+19-Jun-2025 23:01:25.259 INFO [http-nio-8080-exec-11] org.apache.catalina.util.LifecycleBase.start The start() method was called on component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/DriveSystemWeb]] after start() had already been called. The second call will be ignored.
+19-Jun-2025 23:11:20.487 INFO [main] org.apache.catalina.core.StandardServer.await Se ha recibido un comando de apagado a través del puerto de apagado. Parando la instancia del Servidor.
+19-Jun-2025 23:11:20.488 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+19-Jun-2025 23:11:20.497 INFO [main] org.apache.catalina.core.StandardService.stopInternal Parando servicio [Catalina]
+19-Jun-2025 23:11:20.520 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+19-Jun-2025 23:11:20.524 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]

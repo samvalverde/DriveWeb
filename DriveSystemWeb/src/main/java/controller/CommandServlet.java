@@ -4,14 +4,20 @@
  */
 package controller;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
-import javax.servlet.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import model.*;
-
-import java.io.*;
-import java.util.*;
+import model.DirectoryNode;
+import model.DriveStorage;
+import model.FileNode;
+import model.FileSystemNode;
+import model.UserDrive;
 
 /**
  *
@@ -260,6 +266,18 @@ public class CommandServlet extends HttpServlet {
                 }
                 break;
             }
+            
+            case "pwd": {
+                UserDrive drive = getDrive(username);
+                if (drive != null) {
+                    resp.getWriter().write(drive.getCurrentPath());
+                } else {
+                    resp.getWriter().write("/");
+                }
+                break;
+            }
+
+            
             case "usage": {
                 UserDrive drive = getDrive(username);
                 if (drive != null) {
