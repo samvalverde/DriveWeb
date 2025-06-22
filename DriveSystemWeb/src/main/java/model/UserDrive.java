@@ -15,6 +15,10 @@ public class UserDrive {
     private DirectoryNode root;
     private DirectoryNode shared;
     private DirectoryNode current;
+    private long espacioTotal;
+    private DirectoryNode directorioRaiz;
+    private DirectoryNode carpetaCompartidos;
+    private DirectoryNode directorioActual;
 
     public UserDrive(String username, long quota) {
         this.username = username;
@@ -27,7 +31,6 @@ public class UserDrive {
     public String getCurrentPath() {
     return current.getPath();
     }
-
 
     public synchronized DirectoryNode getCurrent() {
         return current;
@@ -59,6 +62,22 @@ public class UserDrive {
 
     public synchronized boolean hasSpaceFor(long size) {
         return getUsedSpace() + size <= quota;
+    }
+
+    public long calcularEspacioUsado() {
+        return calcularEspacioUsadoRecursivo(directorioRaiz);
+    }
+
+    private long calcularEspacioUsadoRecursivo(DirectoryNode dir) {
+        long total = 0;
+        for (FileSystemNode node : dir.getChildren()) {
+            if (node instanceof FileNode) {
+                total += ((FileNode) node).getSize();
+            } else if (node instanceof DirectoryNode) {
+                total += calcularEspacioUsadoRecursivo((DirectoryNode) node);
+            }
+        }
+        return total;
     }
 
     public synchronized boolean nameExists(String name) {
@@ -124,6 +143,30 @@ public class UserDrive {
                 child.setParent(dir);
             }
         }
+    }
+    
+    public boolean loadFile(String fileName, String content) {
+        long fileSize = content.getBytes().length;
+        long espacioDisponible = espacioTotal - calcularEspacioUsado();
+
+        if (fileSize > espacioDisponible) {
+            return false; // No hay espacio suficiente
+        }
+
+        String nombreSinExtension = fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName;
+        String extension = fileName.contains(".") ? fileName.substring(fileName.lastIndexOf(".") + 1) : "";
+
+        for (FileSystemNode node : directorioActual.getChildren()) {
+            if (node instanceof FileNode && node.getName().equals(nombreSinExtension)) {
+                return false; // Ya existe
+            }
+        }
+
+        FileNode nuevoArchivo = new FileNode(nombreSinExtension, extension);
+        nuevoArchivo.setContent(content);
+        nuevoArchivo.setParent(directorioActual);
+        directorioActual.addChild(nuevoArchivo);
+        return true;
     }
 
     private DirectoryNode findNodeByPath(String path, DirectoryNode dir) {

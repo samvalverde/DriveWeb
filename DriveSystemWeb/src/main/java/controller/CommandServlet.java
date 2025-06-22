@@ -7,12 +7,22 @@ package controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.Part;
+/*
+import javax.servlet.http.HttpSession;
+import javax.servlet.ServletException;
+*/
 import model.DirectoryNode;
 import model.DriveStorage;
 import model.FileNode;
@@ -26,6 +36,7 @@ import model.UserDrive;
 
 
 @WebServlet("/api/command")
+@MultipartConfig
 public class CommandServlet extends HttpServlet {
     private final Map<String, UserDrive> sessions = new HashMap<>();
 
@@ -210,6 +221,23 @@ public class CommandServlet extends HttpServlet {
                 }
                 break;
             }
+            case "load": {
+                Part filePart = req.getPart("file");
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                InputStream fileContent = filePart.getInputStream();
+                String content = new BufferedReader(new InputStreamReader(fileContent))
+                        .lines().collect(Collectors.joining("\n"));
+
+                UserDrive drive = DriveStorage.getUserDrive(username);
+                boolean success = drive.loadFile(fileName, content);
+                if (success) {
+                    DriveStorage.saveUserDrive(username);
+                    resp.getWriter().write("Archivo cargado exitosamente.");
+                } else {
+                    resp.getWriter().write("Error: archivo duplicado o sin espacio.");
+                }
+                break;
+            }
             case "move": {
                 String source = req.getParameter("source");
                 String target = req.getParameter("target");
@@ -276,7 +304,6 @@ public class CommandServlet extends HttpServlet {
                 }
                 break;
             }
-
             
             case "usage": {
                 UserDrive drive = getDrive(username);
