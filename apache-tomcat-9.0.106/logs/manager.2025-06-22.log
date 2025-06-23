@@ -13,3 +13,7 @@
 22-Jun-2025 18:49:14.468 INFO [http-nio-8080-exec-17] org.apache.catalina.core.ApplicationContext.log Manager: start: Starting web application '/DriveSystemWeb'
 22-Jun-2025 18:52:11.051 INFO [http-nio-8080-exec-19] org.apache.catalina.core.ApplicationContext.log Manager: list: Listing contexts for virtual host 'localhost'
 22-Jun-2025 18:52:11.057 INFO [http-nio-8080-exec-28] org.apache.catalina.core.ApplicationContext.log Manager: undeploy: Undeploying web application at '/DriveSystemWeb'
+22-Jun-2025 18:52:29.592 INFO [http-nio-8080-exec-21] org.apache.catalina.core.ApplicationContext.log Manager: list: Listing contexts for virtual host 'localhost'
+22-Jun-2025 18:52:29.595 INFO [http-nio-8080-exec-25] org.apache.catalina.core.ApplicationContext.log Manager: list: Listing contexts for virtual host 'localhost'
+22-Jun-2025 18:52:29.620 INFO [http-nio-8080-exec-19] org.apache.catalina.core.ApplicationContext.log Manager: install: Installing context configuration at 'file:/C:/Users/antho/AppData/Local/Temp/context1814348267715212558.xml'
+22-Jun-2025 18:52:29.870 INFO [http-nio-8080-exec-26] org.apache.catalina.core.ApplicationContext.log Manager: start: Starting web application '/DriveSystemWeb'
