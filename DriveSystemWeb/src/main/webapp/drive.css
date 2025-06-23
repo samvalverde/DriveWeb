@@ -113,3 +113,21 @@ header h1 {
     width: 100%;
     margin-top: 0.5rem;
 }
+
+.logout-btn {
+  background-color: #bd1c1c;         /* Azul elegante */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logout-btn:hover {
+  background-color: #610707;         /* Azul más oscuro */
+  transform: scale(1.03);
+}
+
