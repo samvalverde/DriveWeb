@@ -15,6 +15,10 @@ public class UserDrive {
     private DirectoryNode root;
     private DirectoryNode shared;
     private DirectoryNode current;
+    private long espacioTotal;
+    private DirectoryNode directorioRaiz;
+    private DirectoryNode carpetaCompartidos;
+    private DirectoryNode directorioActual;
 
     public UserDrive(String username, long quota) {
         this.username = username;
@@ -27,7 +31,6 @@ public class UserDrive {
     public String getCurrentPath() {
     return current.getPath();
     }
-
 
     public synchronized DirectoryNode getCurrent() {
         return current;
@@ -59,6 +62,22 @@ public class UserDrive {
 
     public synchronized boolean hasSpaceFor(long size) {
         return getUsedSpace() + size <= quota;
+    }
+
+    public long calcularEspacioUsado() {
+        return calcularEspacioUsadoRecursivo(directorioRaiz);
+    }
+
+    private long calcularEspacioUsadoRecursivo(DirectoryNode dir) {
+        long total = 0;
+        for (FileSystemNode node : dir.getChildren()) {
+            if (node instanceof FileNode) {
+                total += ((FileNode) node).getSize();
+            } else if (node instanceof DirectoryNode) {
+                total += calcularEspacioUsadoRecursivo((DirectoryNode) node);
+            }
+        }
+        return total;
     }
 
     public synchronized boolean nameExists(String name) {
@@ -125,6 +144,30 @@ public class UserDrive {
             }
         }
     }
+    
+    public boolean loadFile(String fileName, String content) {
+        long fileSize = content.getBytes().length;
+        long espacioDisponible = espacioTotal - calcularEspacioUsado();
+
+        if (fileSize > espacioDisponible) {
+            return false; // No hay espacio suficiente
+        }
+
+        String nombreSinExtension = fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName;
+        String extension = fileName.contains(".") ? fileName.substring(fileName.lastIndexOf(".") + 1) : "";
+
+        for (FileSystemNode node : directorioActual.getChildren()) {
+            if (node instanceof FileNode && node.getName().equals(nombreSinExtension)) {
+                return false; // Ya existe
+            }
+        }
+
+        FileNode nuevoArchivo = new FileNode(nombreSinExtension, extension);
+        nuevoArchivo.setContent(content);
+        nuevoArchivo.setParent(directorioActual);
+        directorioActual.addChild(nuevoArchivo);
+        return true;
+    }
 
     private DirectoryNode findNodeByPath(String path, DirectoryNode dir) {
         if (dir.getPath().equals(path)) return dir;
@@ -136,6 +179,94 @@ public class UserDrive {
         }
         return null;
     }
+    
+    public boolean copiarArchivo(String nombreArchivo, String rutaDestino) {
+        FileNode archivo = buscarArchivo(nombreArchivo, directorioActual);
+        if (archivo == null) return false;
+
+        DirectoryNode destino = buscarDirectorioPorRuta(rutaDestino);
+        if (destino == null) return false;
+
+        // Verificar duplicado
+        for (FileSystemNode nodo : destino.getChildren()) {
+            if (nodo instanceof FileNode && nodo.getName().equals(archivo.getName())) {
+                return false;
+            }
+        }
+
+        long tamaño = archivo.getContent().getBytes().length;
+        long espacioDisponible = espacioTotal - calcularEspacioUsado();
+        if (tamaño > espacioDisponible) return false;
+
+        // Crear copia
+        FileNode copia = new FileNode(archivo.getName(), archivo.getExtension());
+        copia.setContent(archivo.getContent());
+        copia.setParent(destino);
+        destino.addChild(copia);
+        return true;
+    }
+
+    public boolean moverNodo(String nombreNodo, String rutaDestino) {
+        FileSystemNode nodo = buscarNodo(nombreNodo, directorioActual);
+        if (nodo == null) return false;
+
+        DirectoryNode destino = buscarDirectorioPorRuta(rutaDestino);
+        if (destino == null || destino == nodo) return false;
+
+        // Evitar duplicado
+        for (FileSystemNode hijo : destino.getChildren()) {
+            if (hijo.getName().equals(nodo.getName())) {
+                return false;
+            }
+        }
+
+        // Eliminar del padre actual
+        if (nodo.getParent() != null) {
+            nodo.getParent().removeChild(nodo);
+        }
+
+        // Mover
+        nodo.setParent(destino);
+        destino.addChild(nodo);
+        return true;
+    }
+
+    private FileNode buscarArchivo(String nombre, DirectoryNode dir) {
+        for (FileSystemNode nodo : dir.getChildren()) {
+            if (nodo instanceof FileNode && nodo.getName().equals(nombre)) {
+                return (FileNode) nodo;
+            }
+        }
+        return null;
+    }
+
+    private FileSystemNode buscarNodo(String nombre, DirectoryNode dir) {
+        for (FileSystemNode nodo : dir.getChildren()) {
+            if (nodo.getName().equals(nombre)) {
+                return nodo;
+            }
+        }
+        return null;
+    }
+
+    private DirectoryNode buscarDirectorioPorRuta(String ruta) {
+        String[] partes = ruta.split("/");
+        DirectoryNode actual = directorioRaiz;
+        for (String parte : partes) {
+            if (parte.isEmpty()) continue;
+            boolean encontrado = false;
+            for (FileSystemNode nodo : actual.getChildren()) {
+                if (nodo instanceof DirectoryNode && nodo.getName().equals(parte)) {
+                    actual = (DirectoryNode) nodo;
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado) return null;
+        }
+        return actual;
+    }
+    
     public synchronized long getQuota() { return quota; }
     public DirectoryNode getRoot() { return root; }
     public DirectoryNode getShared() { return shared; }

@@ -26,6 +26,8 @@ public class DriveStorage {
     .registerTypeAdapterFactory(typeFactory)
     .setPrettyPrinting()
     .create();
+    
+    private static Map<String, UserDrive> drives = new HashMap<>();
 
     public static void save(String username, UserDrive drive) throws IOException {
         File folder = new File("data");
@@ -44,7 +46,55 @@ public class DriveStorage {
             e.printStackTrace();
         }
     }
+    
+    public static void cargarDriveUsuario(String username) {
+        File jsonFile = new File("data/" + username + ".json");
+        if (!jsonFile.exists()) {
+            System.out.println("No se encontró el archivo del usuario: " + username);
+            return;
+        }
 
+        try (Reader reader = new FileReader(jsonFile)) {
+            Gson gson = new GsonBuilder()
+                .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(FileSystemNode.class, "type")
+                    .registerSubtype(FileNode.class, "file")
+                    .registerSubtype(DirectoryNode.class, "directory"))
+                .create();
+            UserDrive drive = gson.fromJson(reader, UserDrive.class);
+            drives.put(username, drive);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void guardarDriveUsuario(String username) {
+        UserDrive drive = drives.get(username);
+        if (drive == null) return;
+
+        try (Writer writer = new FileWriter("data/" + username + ".json")) {
+            Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapterFactory(RuntimeTypeAdapterFactory.of(FileSystemNode.class, "type")
+                    .registerSubtype(FileNode.class, "file")
+                    .registerSubtype(DirectoryNode.class, "directory"))
+                .create();
+            gson.toJson(drive, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static UserDrive getUserDrive(String username) {
+        return drives.get(username);
+    }
+
+    public static void saveUserDrive(String username) {
+        guardarDriveUsuario(username);
+    }
+
+    public static void putUserDrive(String username, UserDrive drive) {
+        drives.put(username, drive);
+    }
     
     public static UserDrive load(String username) throws IOException {
     try (FileReader r = new FileReader("data/" + username + ".json")) {

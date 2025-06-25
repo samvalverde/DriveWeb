@@ -7,12 +7,22 @@ package controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.Part;
+/*
+import javax.servlet.http.HttpSession;
+import javax.servlet.ServletException;
+*/
 import model.DirectoryNode;
 import model.DriveStorage;
 import model.FileNode;
@@ -26,6 +36,7 @@ import model.UserDrive;
 
 
 @WebServlet("/api/command")
+@MultipartConfig
 public class CommandServlet extends HttpServlet {
     private final Map<String, UserDrive> sessions = new HashMap<>();
 
@@ -40,7 +51,7 @@ public class CommandServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         String username = req.getParameter("user");
 
@@ -196,17 +207,17 @@ public class CommandServlet extends HttpServlet {
                 break;
             }
             case "copy": {
-                String source = req.getParameter("source");
-                String target = req.getParameter("target");
-                UserDrive drive = getDrive(username);
-                if (drive != null) {
-                    try {
-                        drive.copyTo(source, target);
-                        DriveStorage.save(username, drive);
-                        resp.getWriter().write("Copiado");
-                    } catch (IllegalArgumentException e) {
-                        resp.getWriter().write("Error: " + e.getMessage());
-                    }
+                String nombreArchivo = req.getParameter("nombreNodo");
+                String destino = req.getParameter("destino");
+
+                UserDrive drive = DriveStorage.getUserDrive(username);
+                boolean exito = drive.copiarArchivo(nombreArchivo, destino);
+
+                if (exito) {
+                    DriveStorage.saveUserDrive(username);
+                    resp.getWriter().write("Archivo copiado exitosamente.");
+                } else {
+                    resp.getWriter().write("Error al copiar: archivo no encontrado, duplicado o sin espacio.");
                 }
                 break;
             }
@@ -222,6 +233,23 @@ public class CommandServlet extends HttpServlet {
                     } catch (IllegalArgumentException e) {
                         resp.getWriter().write("Error: " + e.getMessage());
                     }
+                }
+                break;
+            }
+            case "load": {
+                Part filePart = req.getPart("file");
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                InputStream fileContent = filePart.getInputStream();
+                String content = new BufferedReader(new InputStreamReader(fileContent))
+                        .lines().collect(Collectors.joining("\n"));
+
+                UserDrive drive = DriveStorage.getUserDrive(username);
+                boolean success = drive.loadFile(fileName, content);
+                if (success) {
+                    DriveStorage.saveUserDrive(username);
+                    resp.getWriter().write("Archivo cargado exitosamente.");
+                } else {
+                    resp.getWriter().write("Error: archivo duplicado o sin espacio.");
                 }
                 break;
             }
@@ -276,7 +304,6 @@ public class CommandServlet extends HttpServlet {
                 }
                 break;
             }
-
             
             case "usage": {
                 UserDrive drive = getDrive(username);

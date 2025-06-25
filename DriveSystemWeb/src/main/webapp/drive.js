@@ -36,6 +36,13 @@ function mostrarModal(tipo) {
             <input id='target' placeholder='Directorio destino'>
             <button onclick='${tipo}(document.getElementById("source").value, document.getElementById("target").value)'>Aceptar</button>
         </div>`;
+    } else if (tipo === 'subir') {
+        contenido = `
+        <div class='modal-content'>
+            <h3>Subir Archivo</h3>
+            <input type='file' id='fileInput'>
+            <button onclick='subirArchivo()'>Subir</button>
+        </div>`;
     } else if (tipo === 'eliminar') {
         contenido = `
         <div class='modal-content'>
@@ -106,6 +113,28 @@ async function mover(source, target) {
     await enviarComando({ action: "move", user: usuario, source, target });
     cerrarModal(); listar();
 }
+
+async function subirArchivo() {
+    const fileInput = document.getElementById("fileInput");
+    const file = fileInput.files[0];
+    if (!file) return alert("Selecciona un archivo");
+
+    const formData = new FormData();
+    formData.append("action", "load");
+    formData.append("user", usuario);
+    formData.append("file", file);
+
+    const res = await fetch("api/command", {
+        method: "POST",
+        body: formData
+    });
+
+    const resultado = await res.text();
+    alert(resultado);
+    cerrarModal();
+    listar();
+}
+
 
 async function eliminar() {
     const name = document.getElementById("name").value;
