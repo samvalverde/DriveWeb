@@ -34,7 +34,7 @@ public class FileNode extends FileSystemNode {
     public long getSize() {
         return content != null ? content.length() : 0;
     }
-
+    
     public void setContent(String content) {
         this.content = content;
         updateModified();

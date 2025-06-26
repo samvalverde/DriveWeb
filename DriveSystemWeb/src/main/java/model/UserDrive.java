@@ -182,10 +182,14 @@ public class UserDrive {
     
     public boolean copiarArchivo(String nombreArchivo, String rutaDestino) {
         FileNode archivo = buscarArchivo(nombreArchivo, directorioActual);
-        if (archivo == null) return false;
+        if (archivo == null) {
+            return false;
+        }
 
         DirectoryNode destino = buscarDirectorioPorRuta(rutaDestino);
-        if (destino == null) return false;
+        if (destino == null) {
+            return false;
+        }
 
         // Verificar duplicado
         for (FileSystemNode nodo : destino.getChildren()) {
@@ -194,18 +198,27 @@ public class UserDrive {
             }
         }
 
-        long tamaño = archivo.getContent().getBytes().length;
+        long tamaño = archivo.getSize();
         long espacioDisponible = espacioTotal - calcularEspacioUsado();
-        if (tamaño > espacioDisponible) return false;
+        if (tamaño > espacioDisponible) {
+            return false;
+        }
 
-        // Crear copia
-        FileNode copia = new FileNode(archivo.getName(), archivo.getExtension());
-        copia.setContent(archivo.getContent());
+        // Crear copia con mismo nombre y contenido
+        FileNode copia = new FileNode(archivo.getName(), archivo.getContent());
         copia.setParent(destino);
         destino.addChild(copia);
         return true;
     }
 
+    private String extraerExtension(String nombre) {
+        int punto = nombre.lastIndexOf('.');
+        if (punto != -1 && punto < nombre.length() - 1) {
+            return nombre.substring(punto + 1);
+        }
+        return "";
+    }
+    
     public boolean moverNodo(String nombreNodo, String rutaDestino) {
         FileSystemNode nodo = buscarNodo(nombreNodo, directorioActual);
         if (nodo == null) return false;
