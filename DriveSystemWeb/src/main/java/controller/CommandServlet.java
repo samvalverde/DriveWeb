@@ -208,32 +208,32 @@ public class CommandServlet extends HttpServlet {
                 break;
             }
             case "copy": {
-                String nombreArchivo = req.getParameter("nombreNodo");
-                String destino = req.getParameter("destino");
+                String source = req.getParameter("source");
+                String target = req.getParameter("target");
 
                 UserDrive drive = DriveStorage.getUserDrive(username);
-                boolean exito = drive.copiarArchivo(nombreArchivo, destino);
+                boolean success = drive.copiarArchivo(source, target);
 
-                if (exito) {
+                if (success) {
                     DriveStorage.saveUserDrive(username);
-                    resp.getWriter().write("Archivo copiado exitosamente.");
+                    resp.getWriter().write("Archivo copiado correctamente.");
                 } else {
-                    resp.getWriter().write("Error al copiar: archivo no encontrado, duplicado o sin espacio.");
+                    resp.getWriter().write("Error al copiar: archivo no encontrado, destino inválido o sin espacio.");
                 }
                 break;
             }
             case "move": {
                 String source = req.getParameter("source");
                 String target = req.getParameter("target");
-                UserDrive drive = getDrive(username);
-                if (drive != null) {
-                    try {
-                        drive.moveTo(source, target);
-                        DriveStorage.save(username, drive);
-                        resp.getWriter().write("Movido");
-                    } catch (IllegalArgumentException e) {
-                        resp.getWriter().write("Error: " + e.getMessage());
-                    }
+
+                UserDrive drive = DriveStorage.getUserDrive(username);
+                boolean success = drive.moverNodo(source, target);
+
+                if (success) {
+                    DriveStorage.saveUserDrive(username);
+                    resp.getWriter().write("Archivo/Directorio movido correctamente.");
+                } else {
+                    resp.getWriter().write("Error al mover: no encontrado, duplicado o destino inválido.");
                 }
                 break;
             }
