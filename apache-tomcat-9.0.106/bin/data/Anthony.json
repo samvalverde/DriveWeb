@@ -31,23 +31,8 @@
     "type": "dir"
   },
   "current": {
-    "children": [
-      {
-        "content": "Hola \n",
-        "name": "Hola.txt",
-        "creationDate": "jun 21, 2025, 8:07:22 p. m.",
-        "modifiedDate": "jun 21, 2025, 8:07:22 p. m.",
-        "type": "file"
-      },
-      {
-        "content": "hola",
-        "name": "hola1.txt",
-        "creationDate": "jun 21, 2025, 9:00:34 p. m.",
-        "modifiedDate": "jun 21, 2025, 9:00:34 p. m.",
-        "type": "file"
-      }
-    ],
-    "name": "shared",
+    "children": [],
+    "name": "root",
     "creationDate": "jun 19, 2025, 9:21:48 p. m.",
     "modifiedDate": "jun 19, 2025, 9:21:48 p. m.",
     "type": "dir"

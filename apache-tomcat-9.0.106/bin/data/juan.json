@@ -6,13 +6,6 @@
       {
         "children": [
           {
-            "children": [],
-            "name": "bases",
-            "creationDate": "jun 13, 2025, 10:19:23 a. m.",
-            "modifiedDate": "jun 13, 2025, 10:19:23 a. m.",
-            "type": "dir"
-          },
-          {
             "content": "esto es una prueba de pdf",
             "name": "proyecto.pdf",
             "creationDate": "jun 13, 2025, 10:19:43 a. m.",
@@ -22,23 +15,30 @@
           {
             "children": [],
             "name": "imagenes",
-            "creationDate": "jun 13, 2025, 9:22:44 a. m.",
-            "modifiedDate": "jun 13, 2025, 9:22:44 a. m.",
+            "creationDate": "jun 26, 2025, 2:23:37 p. m.",
+            "modifiedDate": "jun 26, 2025, 2:23:37 p. m.",
             "type": "dir"
           },
           {
-            "content": "esto es una prueba de txt",
+            "children": [],
+            "name": "bases",
+            "creationDate": "jun 26, 2025, 2:56:32 p. m.",
+            "modifiedDate": "jun 26, 2025, 2:56:32 p. m.",
+            "type": "dir"
+          },
+          {
+            "content": "nuevo",
             "name": "bases.txt",
-            "creationDate": "jun 13, 2025, 10:46:05 a. m.",
-            "modifiedDate": "jun 13, 2025, 10:46:05 a. m.",
+            "creationDate": "jun 26, 2025, 2:57:58 p. m.",
+            "modifiedDate": "jun 26, 2025, 3:13:27 p. m.",
             "type": "file"
           },
           {
-            "content": "hola",
-            "name": "prueba.pdf",
-            "creationDate": "jun 18, 2025, 6:58:19 p. m.",
-            "modifiedDate": "jun 18, 2025, 6:58:19 p. m.",
-            "type": "file"
+            "children": [],
+            "name": "prueba",
+            "creationDate": "jun 26, 2025, 2:58:34 p. m.",
+            "modifiedDate": "jun 26, 2025, 2:58:34 p. m.",
+            "type": "dir"
           }
         ],
         "name": "docs",
@@ -47,7 +47,15 @@
         "type": "dir"
       },
       {
-        "children": [],
+        "children": [
+          {
+            "content": "esta es una prueba de subir archivo :)",
+            "name": "prueba.txt",
+            "creationDate": "jun 25, 2025, 6:28:35 p. m.",
+            "modifiedDate": "jun 25, 2025, 6:28:35 p. m.",
+            "type": "file"
+          }
+        ],
         "name": "prueba",
         "creationDate": "jun 19, 2025, 8:51:17 p. m.",
         "modifiedDate": "jun 19, 2025, 8:51:17 p. m.",
@@ -69,44 +77,67 @@
   "current": {
     "children": [
       {
-        "children": [],
-        "name": "bases",
-        "creationDate": "jun 13, 2025, 10:19:23 a. m.",
-        "modifiedDate": "jun 13, 2025, 10:19:23 a. m.",
+        "children": [
+          {
+            "content": "esto es una prueba de pdf",
+            "name": "proyecto.pdf",
+            "creationDate": "jun 13, 2025, 10:19:43 a. m.",
+            "modifiedDate": "jun 13, 2025, 10:27:47 a. m.",
+            "type": "file"
+          },
+          {
+            "children": [],
+            "name": "imagenes",
+            "creationDate": "jun 26, 2025, 2:23:37 p. m.",
+            "modifiedDate": "jun 26, 2025, 2:23:37 p. m.",
+            "type": "dir"
+          },
+          {
+            "children": [],
+            "name": "bases",
+            "creationDate": "jun 26, 2025, 2:56:32 p. m.",
+            "modifiedDate": "jun 26, 2025, 2:56:32 p. m.",
+            "type": "dir"
+          },
+          {
+            "content": "nuevo",
+            "name": "bases.txt",
+            "creationDate": "jun 26, 2025, 2:57:58 p. m.",
+            "modifiedDate": "jun 26, 2025, 3:13:27 p. m.",
+            "type": "file"
+          },
+          {
+            "children": [],
+            "name": "prueba",
+            "creationDate": "jun 26, 2025, 2:58:34 p. m.",
+            "modifiedDate": "jun 26, 2025, 2:58:34 p. m.",
+            "type": "dir"
+          }
+        ],
+        "name": "docs",
+        "creationDate": "jun 13, 2025, 9:22:14 a. m.",
+        "modifiedDate": "jun 13, 2025, 9:22:14 a. m.",
         "type": "dir"
       },
       {
-        "content": "esto es una prueba de pdf",
-        "name": "proyecto.pdf",
-        "creationDate": "jun 13, 2025, 10:19:43 a. m.",
-        "modifiedDate": "jun 13, 2025, 10:27:47 a. m.",
-        "type": "file"
-      },
-      {
-        "children": [],
-        "name": "imagenes",
-        "creationDate": "jun 13, 2025, 9:22:44 a. m.",
-        "modifiedDate": "jun 13, 2025, 9:22:44 a. m.",
+        "children": [
+          {
+            "content": "esta es una prueba de subir archivo :)",
+            "name": "prueba.txt",
+            "creationDate": "jun 25, 2025, 6:28:35 p. m.",
+            "modifiedDate": "jun 25, 2025, 6:28:35 p. m.",
+            "type": "file"
+          }
+        ],
+        "name": "prueba",
+        "creationDate": "jun 19, 2025, 8:51:17 p. m.",
+        "modifiedDate": "jun 19, 2025, 8:51:17 p. m.",
         "type": "dir"
-      },
-      {
-        "content": "esto es una prueba de txt",
-        "name": "bases.txt",
-        "creationDate": "jun 13, 2025, 10:46:05 a. m.",
-        "modifiedDate": "jun 13, 2025, 10:46:05 a. m.",
-        "type": "file"
-      },
-      {
-        "content": "hola",
-        "name": "prueba.pdf",
-        "creationDate": "jun 18, 2025, 6:58:19 p. m.",
-        "modifiedDate": "jun 18, 2025, 6:58:19 p. m.",
-        "type": "file"
       }
     ],
-    "name": "docs",
-    "creationDate": "jun 13, 2025, 9:22:14 a. m.",
-    "modifiedDate": "jun 13, 2025, 9:22:14 a. m.",
+    "name": "root",
+    "creationDate": "jun 13, 2025, 9:18:22 a. m.",
+    "modifiedDate": "jun 13, 2025, 9:18:22 a. m.",
     "type": "dir"
   }
 }

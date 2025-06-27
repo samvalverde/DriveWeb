@@ -45,5 +45,13 @@ public class FileNode extends FileSystemNode {
         return new FileNode(getName(), getContent());
     }
 
+    public String getExtension() {
+        int index = getName().lastIndexOf('.');
+        if (index > 0 && index < getName().length() - 1) {
+            return getName().substring(index + 1).toLowerCase();
+        }
+        return ""; // sin extensión
+    }
+
 }
 

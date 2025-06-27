@@ -15,10 +15,7 @@ public class UserDrive {
     private DirectoryNode root;
     private DirectoryNode shared;
     private DirectoryNode current;
-    private long espacioTotal;
-    private DirectoryNode directorioRaiz;
-    private DirectoryNode carpetaCompartidos;
-    private DirectoryNode directorioActual;
+    
 
     public UserDrive(String username, long quota) {
         this.username = username;
@@ -26,6 +23,8 @@ public class UserDrive {
         this.root = new DirectoryNode("root");
         this.shared = new DirectoryNode("shared");
         this.current = root;
+        
+        shared.setParent(root);
     }
 
     public String getCurrentPath() {
@@ -64,38 +63,10 @@ public class UserDrive {
         return getUsedSpace() + size <= quota;
     }
 
-    public long calcularEspacioUsado() {
-        return calcularEspacioUsadoRecursivo(directorioRaiz);
-    }
-
-    private long calcularEspacioUsadoRecursivo(DirectoryNode dir) {
-        long total = 0;
-        for (FileSystemNode node : dir.getChildren()) {
-            if (node instanceof FileNode) {
-                total += ((FileNode) node).getSize();
-            } else if (node instanceof DirectoryNode) {
-                total += calcularEspacioUsadoRecursivo((DirectoryNode) node);
-            }
-        }
-        return total;
-    }
-
     public synchronized boolean nameExists(String name) {
         return current.getChild(name) != null;
     }
 
-    public synchronized void copyTo(String source, String target) {
-        FileSystemNode src = current.getChild(source);
-        FileSystemNode tgt = current.getChild(target);
-
-        if (src == null) throw new IllegalArgumentException("Elemento de origen no encontrado.");
-        if (!(tgt instanceof DirectoryNode)) throw new IllegalArgumentException("Destino no es un directorio.");
-        if (((DirectoryNode) tgt).getChild(src.getName()) != null)
-            throw new IllegalArgumentException("Ya existe un archivo/directorio con ese nombre en el destino.");
-
-        ((DirectoryNode) tgt).addChild(deepCopy(src));
-    }
-    
     public FileSystemNode deepCopy(FileSystemNode node) {
         if (node instanceof FileNode) {
             return new FileNode(node.getName(), ((FileNode) node).getContent());
@@ -108,20 +79,6 @@ public class UserDrive {
         }
         return null;
     }
-
-    public synchronized void moveTo(String source, String target) {
-        FileSystemNode src = current.getChild(source);
-        FileSystemNode tgt = current.getChild(target);
-
-        if (src == null) throw new IllegalArgumentException("Elemento de origen no encontrado.");
-        if (!(tgt instanceof DirectoryNode)) throw new IllegalArgumentException("Destino no es un directorio.");
-        if (((DirectoryNode) tgt).getChild(src.getName()) != null)
-            throw new IllegalArgumentException("Ya existe un archivo/directorio con ese nombre en el destino.");
-
-        current.removeChild(src);
-        ((DirectoryNode) tgt).addChild(src);
-    }
-
 
     public void restoreParents() {
         assignParents(root, null);
@@ -147,7 +104,7 @@ public class UserDrive {
     
     public boolean loadFile(String fileName, String content) {
         long fileSize = content.getBytes().length;
-        long espacioDisponible = espacioTotal - calcularEspacioUsado();
+        long espacioDisponible = quota - getUsedSpace();
 
         if (fileSize > espacioDisponible) {
             return false; // No hay espacio suficiente
@@ -156,7 +113,7 @@ public class UserDrive {
         String nombreSinExtension = fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName;
         String extension = fileName.contains(".") ? fileName.substring(fileName.lastIndexOf(".") + 1) : "";
 
-        for (FileSystemNode node : directorioActual.getChildren()) {
+        for (FileSystemNode node : current.getChildren()) {
             if (node instanceof FileNode && node.getName().equals(nombreSinExtension)) {
                 return false; // Ya existe
             }
@@ -164,8 +121,8 @@ public class UserDrive {
 
         FileNode nuevoArchivo = new FileNode(nombreSinExtension, extension);
         nuevoArchivo.setContent(content);
-        nuevoArchivo.setParent(directorioActual);
-        directorioActual.addChild(nuevoArchivo);
+        nuevoArchivo.setParent(current);
+        current.addChild(nuevoArchivo);
         return true;
     }
 
@@ -181,7 +138,7 @@ public class UserDrive {
     }
     
     public boolean copiarArchivo(String nombreArchivo, String rutaDestino) {
-        FileNode archivo = buscarArchivo(nombreArchivo, directorioActual);
+        FileNode archivo = buscarArchivo(nombreArchivo, current);
         if (archivo == null) return false;
 
         DirectoryNode destino = buscarDirectorioPorRuta(rutaDestino);
@@ -195,7 +152,7 @@ public class UserDrive {
         }
 
         long tamaño = archivo.getContent().getBytes().length;
-        long espacioDisponible = espacioTotal - calcularEspacioUsado();
+        long espacioDisponible = quota - getUsedSpace();
         if (tamaño > espacioDisponible) return false;
 
         // Crear copia
@@ -207,7 +164,7 @@ public class UserDrive {
     }
 
     public boolean moverNodo(String nombreNodo, String rutaDestino) {
-        FileSystemNode nodo = buscarNodo(nombreNodo, directorioActual);
+        FileSystemNode nodo = buscarNodo(nombreNodo, current);
         if (nodo == null) return false;
 
         DirectoryNode destino = buscarDirectorioPorRuta(rutaDestino);
@@ -251,7 +208,7 @@ public class UserDrive {
 
     private DirectoryNode buscarDirectorioPorRuta(String ruta) {
         String[] partes = ruta.split("/");
-        DirectoryNode actual = directorioRaiz;
+        DirectoryNode actual = root;
         for (String parte : partes) {
             if (parte.isEmpty()) continue;
             boolean encontrado = false;
@@ -267,6 +224,76 @@ public class UserDrive {
         return actual;
     }
     
+    // Método que busca un nodo por ruta (por ejemplo: "proyecto/docs/texto.txt")
+    public FileSystemNode getNodeByPath(String path) {
+        if (path.equals("/")) return root;
+        
+        String[] partes = path.split("/");
+        DirectoryNode actual = path.startsWith("shared") ? shared : root;
+
+        for (int i = 0; i < partes.length; i++) {
+            String nombre = partes[i];
+            if (nombre.equals("shared")) continue; // si empieza por "shared", ya estamos ahí
+
+            FileSystemNode hijo = actual.getChild(nombre);
+            if (hijo == null) return null;
+
+            if (i == partes.length - 1) {
+                return hijo;
+            } else if (hijo instanceof DirectoryNode) {
+                actual = (DirectoryNode) hijo;
+            } else {
+                return null;
+            }
+        }
+        return actual;
+    }
+
+    // Devuelve un directorio a partir de una ruta
+    public DirectoryNode getDirectoryByPath(String path) {
+        if (path.equals("/")) return root; 
+        FileSystemNode nodo = getNodeByPath(path);
+        if (nodo instanceof DirectoryNode) {
+            return (DirectoryNode) nodo;
+        }
+        return null;
+    }
+
+    // Copia un nodo a una ruta destino
+    public boolean copiar(String origenPath, String destinoPath) {
+        FileSystemNode origen = getNodeByPath(origenPath);
+        DirectoryNode destino = getDirectoryByPath(destinoPath);
+
+        if (origen == null || destino == null) return false;
+
+        // Validar duplicados
+        if (destino.getChild(origen.getName()) != null) return false;
+
+        // Validar espacio si es archivo
+        if (origen instanceof FileNode && !hasSpaceFor(((FileNode) origen).getSize())) return false;
+
+        destino.addChild(origen.deepCopy());
+        return true;
+    }
+
+    // Mueve un nodo a otra carpeta
+    public boolean mover(String origenPath, String destinoPath) {
+        FileSystemNode origen = getNodeByPath(origenPath);
+        DirectoryNode destino = getDirectoryByPath(destinoPath);
+
+        if (origen == null || destino == null) return false;
+
+        // 🛑 No permitir mover 'shared'
+        if (origen == shared) return false;
+    
+        // Validar duplicados
+        if (destino.getChild(origen.getName()) != null) return false;
+
+        origen.getParent().removeChild(origen);
+        destino.addChild(origen);
+        return true;
+    }
+
     public synchronized long getQuota() { return quota; }
     public DirectoryNode getRoot() { return root; }
     public DirectoryNode getShared() { return shared; }

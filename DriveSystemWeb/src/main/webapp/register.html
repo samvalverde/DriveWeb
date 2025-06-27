@@ -9,9 +9,9 @@
 <body>
   <div class="register-container">
     <h2>Registro</h2>
-    <form onsubmit="return registrar(event)">
+    <form id="formulario-registro">
       <input id="user" required placeholder="Nombre de usuario">
-      <input id="quota" type="number" min="1" step="1">
+      <input id="quota" type="number" min="1">
       <button type="submit">Crear Drive</button>
     </form>
     <div id="mensaje" class="mensaje"></div>

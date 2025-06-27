@@ -10,8 +10,13 @@ import java.util.Map;
 import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
+import javax.servlet.http.Part;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
+
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,10 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
-/*
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.ServletException;
-*/
+
 import model.DirectoryNode;
 import model.DriveStorage;
 import model.FileNode;
@@ -50,13 +55,19 @@ public class CommandServlet extends HttpServlet {
         return null;
     }
 
+    private String obtenerExtension(String nombre) {
+        int punto = nombre.lastIndexOf(".");
+        return punto != -1 ? nombre.substring(punto + 1) : "(sin extensión)";
+    }
+    
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String action = req.getParameter("action");
-        String username = req.getParameter("user");
+        String username = req.getParameter("user").toLowerCase();
 
         switch (action) {
             case "login": {
+                username = username.toLowerCase();
                 if (DriveStorage.exists(username)) {
                     resp.getWriter().write("OK");
                 } else {
@@ -67,14 +78,16 @@ public class CommandServlet extends HttpServlet {
             }
             case "createDrive": {
                 if (DriveStorage.exists(username)) {
-                    resp.getWriter().write("Ya existe un drive para este usuario. No se puede sobrescribir.");
-                } else {
-                    long quota = Long.parseLong(req.getParameter("quota"));
-                    UserDrive drive = new UserDrive(username, quota);
-                    sessions.put(username, drive);
-                    DriveStorage.save(username, drive);
-                    resp.getWriter().write("Drive creado exitosamente.");
+                    resp.setStatus(HttpServletResponse.SC_CONFLICT); // 409
+                    resp.getWriter().write("⚠️ Ya existe un drive para este usuario.");
+                    return;
                 }
+
+                long quota = Long.parseLong(req.getParameter("quota"));
+                UserDrive drive = new UserDrive(username.toLowerCase(), quota);
+                sessions.put(username.toLowerCase(), drive);
+                DriveStorage.save(username.toLowerCase(), drive);
+                resp.getWriter().write("Drive creado exitosamente.");
                 break;
             }
             case "createDir": {
@@ -178,7 +191,7 @@ public class CommandServlet extends HttpServlet {
                 if (drive != null) {
                     boolean changed = drive.changeDirectory(name);
                     if (changed) {
-                        DriveStorage.save(username, drive);
+                        DriveStorage.save(username, drive); 
                         resp.getWriter().write("Directorio cambiado a: " + drive.getCurrent().getName());
                     } else {
                         resp.getWriter().write("El directorio '" + name + "' no existe en el directorio actual.");
@@ -190,15 +203,26 @@ public class CommandServlet extends HttpServlet {
                 String name = req.getParameter("name");
                 UserDrive drive = getDrive(username);
                 if (drive != null) {
-                    FileSystemNode node = drive.getCurrent().getChild(name);
+                    FileSystemNode node;
+
+                    if ("shared".equalsIgnoreCase(name) && drive.getCurrent() == drive.getRoot()) {
+                        node = drive.getShared(); // acceso especial
+                    } else {
+                        node = drive.getCurrent().getChild(name);
+                    }
+
                     if (node != null) {
                         StringBuilder sb = new StringBuilder();
                         sb.append("Nombre: ").append(node.getName()).append("\n")
                           .append("Tipo: ").append(node.isDirectory() ? "Directorio" : "Archivo").append("\n")
                           .append("Creado: ").append(node.getCreationDate()).append("\n")
                           .append("Modificado: ").append(node.getModifiedDate());
+
                         if (node instanceof FileNode)
                             sb.append("\nTamaño: ").append(((FileNode) node).getSize()).append(" bytes");
+                        else if (node instanceof DirectoryNode)
+                            sb.append("\nTamaño: ").append(((DirectoryNode) node).getSize()).append(" bytes");
+
                         resp.getWriter().write(sb.toString());
                     } else {
                         resp.getWriter().write("No encontrado");
@@ -207,17 +231,17 @@ public class CommandServlet extends HttpServlet {
                 break;
             }
             case "copy": {
-                String nombreArchivo = req.getParameter("nombreNodo");
-                String destino = req.getParameter("destino");
-
-                UserDrive drive = DriveStorage.getUserDrive(username);
-                boolean exito = drive.copiarArchivo(nombreArchivo, destino);
-
-                if (exito) {
-                    DriveStorage.saveUserDrive(username);
-                    resp.getWriter().write("Archivo copiado exitosamente.");
-                } else {
-                    resp.getWriter().write("Error al copiar: archivo no encontrado, duplicado o sin espacio.");
+                String source = req.getParameter("source");
+                String target = req.getParameter("target");
+                UserDrive drive = getDrive(username);
+                if (drive != null) {
+                    boolean ok = drive.copiar(source, target);
+                    if (ok) {
+                        DriveStorage.save(username, drive);
+                        resp.getWriter().write("Copia realizada con éxito.");
+                    } else {
+                        resp.getWriter().write("Error al copiar: ruta incorrecta o duplicado.");
+                    }
                 }
                 break;
             }
@@ -225,38 +249,83 @@ public class CommandServlet extends HttpServlet {
                 String source = req.getParameter("source");
                 String target = req.getParameter("target");
                 UserDrive drive = getDrive(username);
+
                 if (drive != null) {
-                    try {
-                        drive.moveTo(source, target);
+                    // Evita mover la carpeta 'shared' (insensible a mayúsculas/minúsculas)
+                    if (source.equalsIgnoreCase("shared") || source.equalsIgnoreCase("/shared")) {
+                        resp.getWriter().write("Error al mover: la carpeta 'shared' no se puede mover.");
+                        break;
+                    }
+                    
+                    // Validar espacio antes de mover si es archivo
+                    FileSystemNode origen = drive.getNodeByPath(source);
+                    if (origen instanceof FileNode) {
+                        long size = ((FileNode) origen).getSize();
+                        if (!drive.hasSpaceFor(size)) {
+                            resp.getWriter().write("Error al mover: no hay suficiente espacio disponible.");
+                            break;
+                        }
+                    }
+                    
+                    boolean ok = drive.mover(source, target);
+                    if (ok) {
                         DriveStorage.save(username, drive);
-                        resp.getWriter().write("Movido");
-                    } catch (IllegalArgumentException e) {
-                        resp.getWriter().write("Error: " + e.getMessage());
+                        resp.getWriter().write("Movimiento realizado con éxito.");
+                    } else {
+                        resp.getWriter().write("Error al mover: ruta incorrecta o duplicado.");
                     }
                 }
                 break;
             }
             case "load": {
-                Part filePart = req.getPart("file");
-                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-                InputStream fileContent = filePart.getInputStream();
-                String content = new BufferedReader(new InputStreamReader(fileContent))
-                        .lines().collect(Collectors.joining("\n"));
+                try {
+                    Part filePart = req.getPart("file");
+                    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
-                UserDrive drive = DriveStorage.getUserDrive(username);
-                boolean success = drive.loadFile(fileName, content);
-                if (success) {
-                    DriveStorage.saveUserDrive(username);
-                    resp.getWriter().write("Archivo cargado exitosamente.");
-                } else {
-                    resp.getWriter().write("Error: archivo duplicado o sin espacio.");
+                    // Validar que sea un archivo de texto
+                    if (!fileName.toLowerCase().endsWith(".txt")) {
+                        resp.getWriter().write("Solo se permiten archivos de texto (.txt)");
+                        return;
+                    }
+
+                    // Leer el contenido del archivo
+                    InputStream fileContent = filePart.getInputStream();
+                    String content = new BufferedReader(new InputStreamReader(fileContent))
+                            .lines().collect(Collectors.joining("\n"));
+
+                    // Obtener el drive del usuario
+                    UserDrive drive = getDrive(username);
+                    if (drive == null) {
+                        resp.getWriter().write("Usuario no tiene un drive cargado.");
+                        return;
+                    }
+
+                    // Validar duplicado y espacio
+                    if (drive.getCurrent().getChild(fileName) != null) {
+                        resp.getWriter().write("Ya existe un archivo o directorio con ese nombre.");
+                        return;
+                    }
+
+                    if (!drive.hasSpaceFor(content.length())) {
+                        resp.getWriter().write("No hay espacio suficiente para guardar el archivo.");
+                        return;
+                    }
+
+                    // Crear y guardar el archivo
+                    drive.getCurrent().addChild(new FileNode(fileName, content));
+                    DriveStorage.save(username, drive);
+                    resp.getWriter().write("Archivo de texto cargado exitosamente.");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    resp.getWriter().write("Error al cargar el archivo.");
                 }
                 break;
             }
             case "share": {
                 String name = req.getParameter("name");
-                String fromUser = req.getParameter("user");
-                String targetUser = req.getParameter("target");
+                String fromUser = req.getParameter("user").toLowerCase();
+                String targetUser = req.getParameter("target").toLowerCase();
 
                 UserDrive fromDrive = getDrive(fromUser);
                 UserDrive toDrive = getDrive(targetUser);
@@ -294,7 +363,6 @@ public class CommandServlet extends HttpServlet {
                 }
                 break;
             }
-            
             case "pwd": {
                 UserDrive drive = getDrive(username);
                 if (drive != null) {
