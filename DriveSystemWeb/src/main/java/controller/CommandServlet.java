@@ -116,9 +116,9 @@ public class CommandServlet extends HttpServlet {
                         return;
                     }
 
-                    // Validar que tenga extensión (ej. .txt, .java)
-                    if (!name.matches("^[\\w\\-\\.]+\\.[a-zA-Z0-9]+$")) {
-                        resp.getWriter().write("Nombre de archivo inválido. Debe incluir una extensión, como 'archivo.txt'.");
+                    // Solo permitir .txt (sin distinguir mayúsculas/minúsculas)
+                    if (!name.toLowerCase().endsWith(".txt")) {
+                        resp.getWriter().write("Solo se permiten archivos con extensión .txt");
                         return;
                     }
 
