@@ -1,0 +1,65 @@
+{
+  "username": "vale",
+  "quota": 2,
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "content": "a",
+            "name": "a.txt",
+            "creationDate": "jun 26, 2025, 7:51:59 p. m.",
+            "modifiedDate": "jun 26, 2025, 7:51:59 p. m.",
+            "type": "file"
+          }
+        ],
+        "name": "imagenes",
+        "creationDate": "jun 26, 2025, 6:58:44 p. m.",
+        "modifiedDate": "jun 26, 2025, 6:58:44 p. m.",
+        "type": "dir"
+      }
+    ],
+    "name": "root",
+    "creationDate": "jun 26, 2025, 6:58:37 p. m.",
+    "modifiedDate": "jun 26, 2025, 6:58:37 p. m.",
+    "type": "dir"
+  },
+  "shared": {
+    "children": [
+      {
+        "content": "a",
+        "name": "a.txt",
+        "creationDate": "jun 26, 2025, 7:54:55 p. m.",
+        "modifiedDate": "jun 26, 2025, 7:54:55 p. m.",
+        "type": "file"
+      }
+    ],
+    "name": "shared",
+    "creationDate": "jun 26, 2025, 6:58:37 p. m.",
+    "modifiedDate": "jun 26, 2025, 6:58:37 p. m.",
+    "type": "dir"
+  },
+  "current": {
+    "children": [
+      {
+        "children": [
+          {
+            "content": "a",
+            "name": "a.txt",
+            "creationDate": "jun 26, 2025, 7:51:59 p. m.",
+            "modifiedDate": "jun 26, 2025, 7:51:59 p. m.",
+            "type": "file"
+          }
+        ],
+        "name": "imagenes",
+        "creationDate": "jun 26, 2025, 6:58:44 p. m.",
+        "modifiedDate": "jun 26, 2025, 6:58:44 p. m.",
+        "type": "dir"
+      }
+    ],
+    "name": "root",
+    "creationDate": "jun 26, 2025, 6:58:37 p. m.",
+    "modifiedDate": "jun 26, 2025, 6:58:37 p. m.",
+    "type": "dir"
+  }
+}

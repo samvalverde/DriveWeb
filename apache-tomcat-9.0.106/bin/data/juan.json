@@ -7,38 +7,31 @@
         "children": [
           {
             "children": [],
-            "name": "bases",
-            "creationDate": "jun 13, 2025, 10:19:23 a. m.",
-            "modifiedDate": "jun 13, 2025, 10:19:23 a. m.",
+            "name": "imagenes",
+            "creationDate": "jun 26, 2025, 2:23:37 p. m.",
+            "modifiedDate": "jun 26, 2025, 2:23:37 p. m.",
             "type": "dir"
           },
           {
-            "content": "esto es una prueba de pdf",
-            "name": "proyecto.pdf",
-            "creationDate": "jun 13, 2025, 10:19:43 a. m.",
-            "modifiedDate": "jun 13, 2025, 10:27:47 a. m.",
+            "children": [],
+            "name": "prueba",
+            "creationDate": "jun 26, 2025, 2:58:34 p. m.",
+            "modifiedDate": "jun 26, 2025, 2:58:34 p. m.",
+            "type": "dir"
+          },
+          {
+            "content": "necesito tener todo bien ",
+            "name": "bases.txt",
+            "creationDate": "jun 26, 2025, 8:09:33 p. m.",
+            "modifiedDate": "jun 26, 2025, 8:09:33 p. m.",
             "type": "file"
           },
           {
             "children": [],
-            "name": "imagenes",
-            "creationDate": "jun 13, 2025, 9:22:44 a. m.",
-            "modifiedDate": "jun 13, 2025, 9:22:44 a. m.",
+            "name": "bases",
+            "creationDate": "jun 26, 2025, 8:10:44 p. m.",
+            "modifiedDate": "jun 26, 2025, 8:10:44 p. m.",
             "type": "dir"
-          },
-          {
-            "content": "esto es una prueba de txt",
-            "name": "bases.txt",
-            "creationDate": "jun 13, 2025, 10:46:05 a. m.",
-            "modifiedDate": "jun 13, 2025, 10:46:05 a. m.",
-            "type": "file"
-          },
-          {
-            "content": "hola",
-            "name": "prueba.pdf",
-            "creationDate": "jun 18, 2025, 6:58:19 p. m.",
-            "modifiedDate": "jun 18, 2025, 6:58:19 p. m.",
-            "type": "file"
           }
         ],
         "name": "docs",
@@ -47,11 +40,26 @@
         "type": "dir"
       },
       {
-        "children": [],
+        "children": [
+          {
+            "content": "esta es una prueba de subir archivo :)",
+            "name": "prueba.txt",
+            "creationDate": "jun 25, 2025, 6:28:35 p. m.",
+            "modifiedDate": "jun 25, 2025, 6:28:35 p. m.",
+            "type": "file"
+          }
+        ],
         "name": "prueba",
         "creationDate": "jun 19, 2025, 8:51:17 p. m.",
         "modifiedDate": "jun 19, 2025, 8:51:17 p. m.",
         "type": "dir"
+      },
+      {
+        "content": "a",
+        "name": "a.txt",
+        "creationDate": "jun 26, 2025, 8:09:01 p. m.",
+        "modifiedDate": "jun 26, 2025, 8:09:01 p. m.",
+        "type": "file"
       }
     ],
     "name": "root",
@@ -70,38 +78,31 @@
     "children": [
       {
         "children": [],
-        "name": "bases",
-        "creationDate": "jun 13, 2025, 10:19:23 a. m.",
-        "modifiedDate": "jun 13, 2025, 10:19:23 a. m.",
+        "name": "imagenes",
+        "creationDate": "jun 26, 2025, 2:23:37 p. m.",
+        "modifiedDate": "jun 26, 2025, 2:23:37 p. m.",
         "type": "dir"
       },
       {
-        "content": "esto es una prueba de pdf",
-        "name": "proyecto.pdf",
-        "creationDate": "jun 13, 2025, 10:19:43 a. m.",
-        "modifiedDate": "jun 13, 2025, 10:27:47 a. m.",
+        "children": [],
+        "name": "prueba",
+        "creationDate": "jun 26, 2025, 2:58:34 p. m.",
+        "modifiedDate": "jun 26, 2025, 2:58:34 p. m.",
+        "type": "dir"
+      },
+      {
+        "content": "necesito tener todo bien ",
+        "name": "bases.txt",
+        "creationDate": "jun 26, 2025, 8:09:33 p. m.",
+        "modifiedDate": "jun 26, 2025, 8:09:33 p. m.",
         "type": "file"
       },
       {
         "children": [],
-        "name": "imagenes",
-        "creationDate": "jun 13, 2025, 9:22:44 a. m.",
-        "modifiedDate": "jun 13, 2025, 9:22:44 a. m.",
+        "name": "bases",
+        "creationDate": "jun 26, 2025, 8:10:44 p. m.",
+        "modifiedDate": "jun 26, 2025, 8:10:44 p. m.",
         "type": "dir"
-      },
-      {
-        "content": "esto es una prueba de txt",
-        "name": "bases.txt",
-        "creationDate": "jun 13, 2025, 10:46:05 a. m.",
-        "modifiedDate": "jun 13, 2025, 10:46:05 a. m.",
-        "type": "file"
-      },
-      {
-        "content": "hola",
-        "name": "prueba.pdf",
-        "creationDate": "jun 18, 2025, 6:58:19 p. m.",
-        "modifiedDate": "jun 18, 2025, 6:58:19 p. m.",
-        "type": "file"
       }
     ],
     "name": "docs",
