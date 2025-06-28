@@ -1,0 +1,57 @@
+{
+  "username": "eli",
+  "quota": 500,
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "content": "adios",
+            "name": "adios.txt",
+            "creationDate": "jun 28, 2025, 10:45:35 a. m.",
+            "modifiedDate": "jun 28, 2025, 10:45:35 a. m.",
+            "type": "file"
+          }
+        ],
+        "name": "adios",
+        "creationDate": "jun 28, 2025, 10:45:24 a. m.",
+        "modifiedDate": "jun 28, 2025, 10:45:24 a. m.",
+        "type": "dir"
+      }
+    ],
+    "name": "root",
+    "creationDate": "jun 28, 2025, 10:45:11 a. m.",
+    "modifiedDate": "jun 28, 2025, 10:45:11 a. m.",
+    "type": "dir"
+  },
+  "shared": {
+    "children": [],
+    "name": "shared",
+    "creationDate": "jun 28, 2025, 10:45:11 a. m.",
+    "modifiedDate": "jun 28, 2025, 10:45:11 a. m.",
+    "type": "dir"
+  },
+  "current": {
+    "children": [
+      {
+        "children": [
+          {
+            "content": "adios",
+            "name": "adios.txt",
+            "creationDate": "jun 28, 2025, 10:45:35 a. m.",
+            "modifiedDate": "jun 28, 2025, 10:45:35 a. m.",
+            "type": "file"
+          }
+        ],
+        "name": "adios",
+        "creationDate": "jun 28, 2025, 10:45:24 a. m.",
+        "modifiedDate": "jun 28, 2025, 10:45:24 a. m.",
+        "type": "dir"
+      }
+    ],
+    "name": "root",
+    "creationDate": "jun 28, 2025, 10:45:11 a. m.",
+    "modifiedDate": "jun 28, 2025, 10:45:11 a. m.",
+    "type": "dir"
+  }
+}

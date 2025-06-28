@@ -31,6 +31,13 @@
         "creationDate": "jun 21, 2025, 9:00:34 p. m.",
         "modifiedDate": "jun 21, 2025, 9:00:34 p. m.",
         "type": "file"
+      },
+      {
+        "content": "adios",
+        "name": "adios.txt",
+        "creationDate": "jun 28, 2025, 10:45:41 a. m.",
+        "modifiedDate": "jun 28, 2025, 10:45:41 a. m.",
+        "type": "file"
       }
     ],
     "name": "shared",
