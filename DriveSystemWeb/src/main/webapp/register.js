@@ -25,12 +25,12 @@ async function registrar(e) {
 
   // Validaciones
   if (!user) {
-    mensaje.innerText = "⚠️ Debes ingresar un nombre de usuario.";
+    mensaje.innerText = "Debes ingresar un nombre de usuario.";
     return;
   }
 
   if (isNaN(quota) || quota <= 0) {
-    mensaje.innerText = "⚠️ La cuota debe ser un número mayor a 0.";
+    mensaje.innerText = "La cuota debe ser un número mayor a 0.";
     return;
   }
 
@@ -42,7 +42,7 @@ async function registrar(e) {
   });
 
   if (check.status === 200) {
-    mensaje.innerText = "⚠️ Ese usuario ya existe. Intenta con otro nombre.";
+    mensaje.innerText = "Ese usuario ya existe. Intenta con otro nombre.";
     return;
   }
 

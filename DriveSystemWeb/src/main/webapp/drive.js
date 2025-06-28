@@ -15,13 +15,13 @@ function mostrarModal(tipo) {
     let contenido = "";
     if (tipo === 'archivo') {
     contenido = `
-        <div class='modal-content'>
-            <h3>Nuevo Archivo</h3>
-            <input id='name' placeholder='Nombre.txt'>
-            <textarea id='content' placeholder='Contenido'></textarea>
-            <div id="errorArchivo" style="color: red; font-size: 0.9rem; margin-top: 0.5rem;"></div>
-            <button onclick='crearArchivo()'>Crear</button>
-        </div>`;
+    <div class='modal-content'>
+        <h3>Nuevo Archivo</h3>
+        <input id='name' placeholder='Nombre.txt'>
+        <textarea id='content' placeholder='Contenido'></textarea>
+        <div id="errorArchivo" style="color: red; font-size: 0.9rem; margin-top: 0.5rem;"></div>
+        <button onclick='crearArchivo()'>Crear</button>
+    </div>`;
     } else if (tipo === 'carpeta') {
         contenido = `
         <div class='modal-content'>
@@ -77,14 +77,14 @@ async function crearArchivo() {
     const errorBox = document.getElementById("errorArchivo");
 
     if (!name) {
-        errorBox.innerText = "⚠️ El nombre del archivo es obligatorio.";
+        errorBox.innerText = "El nombre del archivo es obligatorio.";
         return;
     }
 
     const respuesta = await enviarComando({ action: "createFile", user: usuario, name, content });
 
     if (respuesta.includes("Ya existe")) {
-        const confirmar = confirm("⚠️ Ya existe un archivo o carpeta con ese nombre. ¿Desea sobrescribirlo?");
+        const confirmar = confirm("Ya existe un archivo o carpeta con ese nombre. ¿Desea sobrescribirlo?");
         if (confirmar) {
             // Si el usuario acepta, eliminamos el anterior y creamos uno nuevo
             await enviarComando({ action: "delete", user: usuario, name });
@@ -92,10 +92,10 @@ async function crearArchivo() {
             cerrarModal();
             listar();
         } else {
-            errorBox.innerText = "No se creó el archivo.";
+            errorBox.innerText = "No se creo el archivo.";
         }
-    } else if (respuesta.includes("inválido")) {
-        errorBox.innerText = "Nombre de archivo inválido. Usa una extensión, por ejemplo 'nota.txt'.";
+    } else if (respuesta.includes("invalido")) {
+        errorBox.innerText = "Nombre de archivo invalido. Usa una extension, por ejemplo 'nota.txt'.";
     } else if (respuesta.includes("espacio")) {
         errorBox.innerText = "No hay espacio suficiente para crear el archivo.";
     } else if (respuesta.includes("Archivo creado")) {
@@ -113,7 +113,7 @@ async function crearDirectorio() {
     const respuesta = await enviarComando({ action: "createDir", user: usuario, name });
 
     if (respuesta.includes("Ya existe")) {
-        const confirmar = confirm("⚠️ Ya existe un archivo o carpeta con ese nombre. ¿Desea sobrescribirlo?");
+        const confirmar = confirm("Ya existe un archivo o carpeta con ese nombre. ¿Desea sobrescribirlo?");
         if (confirmar) {
             await enviarComando({ action: "delete", user: usuario, name });
             await enviarComando({ action: "createDir", user: usuario, name });
@@ -340,7 +340,7 @@ function cerrarMenuContextual() {
 
 function mostrarFormularioCopiar(nombre) {
     cerrarMenuContextual();
-    const destino = prompt(`¿A qué directorio quieres copiar '${nombre}'? Ej: prueba/docs`);
+    const destino = prompt(`¿A que directorio quieres copiar '${nombre}'? Ej: prueba/docs`);
     if (destino) {
         const sourcePath = rutaActual ? `${rutaActual}/${nombre}` : nombre;
         copiarRuta(sourcePath, destino);
@@ -349,7 +349,7 @@ function mostrarFormularioCopiar(nombre) {
 
 function mostrarFormularioMover(nombre) {
     cerrarMenuContextual();
-    const destino = prompt(`¿A qué directorio quieres mover '${nombre}'?`);
+    const destino = prompt(`¿A que directorio quieres mover '${nombre}'?`);
     if (destino) {
         const sourcePath = rutaActual ? `${rutaActual}/${nombre}` : nombre;
         moverRuta(sourcePath, destino);
@@ -380,7 +380,7 @@ async function eliminarDirecto(name) {
 
 function mostrarFormularioCompartir(nombre) {
     cerrarMenuContextual();
-    const target = prompt(`¿A qué usuario deseas compartir '${nombre}'?`);
+    const target = prompt(`¿A que usuario deseas compartir '${nombre}'?`);
     if (target) {
         enviarComando({ action: "share", user: usuario, name: nombre, target })
             .then(alert)

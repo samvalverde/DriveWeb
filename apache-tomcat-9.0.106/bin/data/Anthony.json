@@ -2,7 +2,15 @@
   "username": "Anthony",
   "quota": 10,
   "root": {
-    "children": [],
+    "children": [
+      {
+        "children": [],
+        "name": "mis docs",
+        "creationDate": "jun 28, 2025, 10:38:21 a. m.",
+        "modifiedDate": "jun 28, 2025, 10:38:21 a. m.",
+        "type": "dir"
+      }
+    ],
     "name": "root",
     "creationDate": "jun 19, 2025, 9:21:48 p. m.",
     "modifiedDate": "jun 19, 2025, 9:21:48 p. m.",
@@ -31,7 +39,15 @@
     "type": "dir"
   },
   "current": {
-    "children": [],
+    "children": [
+      {
+        "children": [],
+        "name": "mis docs",
+        "creationDate": "jun 28, 2025, 10:38:21 a. m.",
+        "modifiedDate": "jun 28, 2025, 10:38:21 a. m.",
+        "type": "dir"
+      }
+    ],
     "name": "root",
     "creationDate": "jun 19, 2025, 9:21:48 p. m.",
     "modifiedDate": "jun 19, 2025, 9:21:48 p. m.",

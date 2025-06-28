@@ -4,29 +4,22 @@
  */
 package controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.io.InputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import java.nio.file.Paths;
-import java.util.stream.Collectors;
-import javax.servlet.http.Part;
-import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
-
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
-
-import javax.servlet.http.HttpSession;
-import javax.servlet.ServletException;
 
 import model.DirectoryNode;
 import model.DriveStorage;
@@ -93,6 +86,12 @@ public class CommandServlet extends HttpServlet {
             case "createDir": {
                 String dirName = req.getParameter("name");
                 UserDrive drive = getDrive(username);
+
+                if ("shared".equalsIgnoreCase(dirName)) {
+                    resp.getWriter().write("El nombre 'shared' esta reservado.");
+                    return;
+                }
+
                 if (drive != null) {
                     if (drive.getCurrent().getChild(dirName) != null) {
                         resp.getWriter().write("Ya existe un archivo/directorio con ese nombre.");
@@ -163,9 +162,10 @@ public class CommandServlet extends HttpServlet {
                           .append(node.getName()).append("\n");
                     }
                     // Mostrar la carpeta compartida si estamos en root
-                    if (drive.getCurrent() == drive.getRoot()) {
+                    if (drive.getCurrent() == drive.getRoot() && drive.getRoot().getChild("shared") == null) {
                         sb.append("[DIR] shared\n");
                     }
+
                     resp.getWriter().write(sb.toString());
                 }
                 break;
